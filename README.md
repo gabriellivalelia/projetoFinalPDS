@@ -1,6 +1,9 @@
 # projetoFinalPDS
 Trabalho final de PDS II - Sistema de gerenciamento de bibliotecas
 
+
+Grupo: Aline da Silva Amaral, Gabrielli Valelia Sousa da Silva, Maria Monteiro Silva, Pedro Henrique Santana de Miranda
+
 1-O usuário e o bibliotecário devem poder logar no sistema, mas somente o usuário pode se cadastrar.
 a) Ao cadastrar gerar id e enviar nome e senha.
 b) Para logar o usuário deve colocar nome e senha corretos, se sim permitir entrar, se não imprimir mensagem de erro.
