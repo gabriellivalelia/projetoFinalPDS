@@ -4,7 +4,7 @@ Trabalho final de PDS II - Sistema de gerenciamento de bibliotecas
 
 Grupo: Aline da Silva Amaral, Gabrielli Valelia Sousa da Silva, Maria Monteiro Silva, Pedro Henrique Santana de Miranda
 
-1) Como usuário e bibliotecário quero ter uma senha e id para logar no sistema.
+1) Como usuário e bibliotecário quero ter uma senha e nome de usuário para logar no sistema.
 a)Para logar o usuário deve colocar nome e senha corretos, se sim permitir entrar, se não imprimir mensagem de erro.
 b)Dois nomes iguais não podem existir.
 c) Todos os bibliotecários e usuários já possuem cadastrados nome e senha.
