@@ -1,4 +1,4 @@
-# projetoFinalPDS
+# Projeto Final PDS
 Trabalho final de PDS II - Sistema de gerenciamento de bibliotecas
 
 
