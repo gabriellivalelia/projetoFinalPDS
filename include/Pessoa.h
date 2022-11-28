@@ -15,11 +15,12 @@ class Pessoa {
         string nome,
         string senha
     );
-    string get_nome();
+    string get_nome();    
     string get_senha();
+    
     void Logar(
         string nome,
-        unsigned int senha
+        string senha
     );
     };
 
