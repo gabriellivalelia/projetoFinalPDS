@@ -11,7 +11,7 @@ class Livro {
         std::string _titulo;
         std::string _autor;
         std::string _genero;
-        stact unsigned int _quantidade;
+        stactic unsigned int _quantidade;
         std vector <Usuario:: Usuario> 
 
     public:
