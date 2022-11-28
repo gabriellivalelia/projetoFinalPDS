@@ -12,7 +12,7 @@ class Livro {
         std::string _autor;
         std::string _genero;
         static unsigned int _quantidade;
-        std vector <Usuario:: Usuario> 
+        std::vector <Usuario>; 
 
     public:
         Livro(

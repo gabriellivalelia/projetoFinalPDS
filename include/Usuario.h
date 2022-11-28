@@ -8,7 +8,7 @@
 
 class Usuario : public Pessoa {
     private:
-        vector<Livro> _livros_alugados;
+        std::vector<Livro> _livros_alugados;
     public:
         Usuario(
             string nome,
