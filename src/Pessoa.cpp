@@ -5,8 +5,11 @@ using namespace std;
 
 Pessoa::Pessoa(
   string nome,
-  unsigned int senha
-) {
+  string senha
+) 
+{
+    this->_nome = nome;
+    this->_senha = senha;
 }
 
 string Pessoa::get_nome() {

@@ -1,5 +1,5 @@
-#include "bibliotecario.h"
-#include "biblioteca.h"
+#include "Bibliotecario.h"
+#include "Biblioteca.h"
 Bibliotecario::Bibliotecario
 (
     std::string nome,

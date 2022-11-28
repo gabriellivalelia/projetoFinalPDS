@@ -8,18 +8,20 @@ using namespace std;
 class Pessoa {
     private:  
         string _nome;
-        unsigned int _senha;
+        string _senha;
+
 
     public:
     Pessoa(
         string nome,
-        unsigned int senha
+        string senha
     );
-    string get_nome();
+    string get_nome();    
     string get_senha();
+    
     void Logar(
         string nome,
-        unsigned int senha
+        string senha
     );
     };
 
