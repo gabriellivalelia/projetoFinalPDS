@@ -17,13 +17,17 @@ class Livro {
 
 
     public:
-        Usuario(
-            string nome,
-            unsigned int senha
+        Livro(
+            std::string titulo;
+            std::string autor;
+            std::string genero;
+            stact unsigned int quantidade;
         );
-        void alugar_livro(Livro livro);
-        void devolver_livro(Livro livro);
-        void visualizar_livros_alugados();
+        std::string get_titulo();
+        std::string get_autor();
+        std::string get_genero();
+        unsigned int get_quantidade();
+        void uppdate_quantidade();
 };
 
 #endif
