@@ -2,10 +2,10 @@
 #define PDS2_BIBLIOTECARIO_H
 
 using namespace std;
-#include "pessoa.h"
-#include "usuario.h"
+#include "Pessoa.h"
+#include "Usuario.h"
 
-class Bibliotecario : Pessoa 
+class Bibliotecario : public Pessoa 
 {
     public:
     Bibliotecario
