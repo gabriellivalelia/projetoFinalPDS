@@ -11,22 +11,21 @@
 class Biblioteca
 {
     private:
-        
         std::vector<Livro>_livros_estoque;
         std::vector<Pessoa>_pessoas;
 
         std::fstream _arquivo_Livros;
         std::fstream _arquivo_pessoas;
-    
-    public:        
-        
-        Biblioteca();
-        std::vector<livro> get_livros_nome(std::string nome);
-        std::vector<livro> get_livros_autor(std::string autor);
-        std::vector<livro> get_livros_genero(std::string genero);
 
-        std::vector<livro> preencher_livros(std::string path);
-        std::vector<livro> preencher_pessoas(std::string path);
+    public:
+
+        Biblioteca();
+        std::vector<Livro> get_livros_nome(std::string nome);
+        std::vector<Livro> get_livros_autor(std::string autor);
+        std::vector<Livro> get_livros_genero(std::string genero);
+
+        void preencher_livros(std::string path);//trocar pra private??
+        void preencher_pessoas(std::string path);
 
 
         void update_estoque(Livro livro);
