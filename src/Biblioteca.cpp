@@ -43,7 +43,7 @@ void Biblioteca::preencher_livros(std::string path)
 //adiciona todas as pessoas de path no atributo _pessoas
 void Biblioteca::preencher_pessoas(std::string path)
 {
-    int quantidade_pessoas = -1;
+    //int quantidade_pessoas = -1;
 
     try
     {
