@@ -1,18 +1,29 @@
 #include "Biblioteca.h"
+#include <iostream>
+#include <fstream>
+#include<string.h>
+#include <vector>
 
-vector<livro> Biblioteca::get_livros_autor(std::string autor)
+std::vector<Livro> Biblioteca::get_livros_autor(std::string autor)
+{
+    std::vector<Livro> livros;
+    return livros;
+}
+std::vector<Livro> Biblioteca::get_livros_genero(std::string genero)
+{
+    std::vector<Livro> livros;
+    return livros;
+}
+std::vector<Livro> Biblioteca::get_livros_nome(std::string nome)
+{
+    std::vector<Livro> livros;
+    return livros;
+}
+
+Biblioteca::Biblioteca()
 {
 
 }
-vector<Livro> Biblioteca::get_livros_genero(std::string genero)
-{
-
-}
-vector<Livro> Biblioteca::get_livros_nome(std::string nome)
-{
-
-}
-
 
 void Biblioteca::update_estoque(Livro livro)
 {
@@ -23,7 +34,7 @@ void Biblioteca::update_pessoas(Pessoa pessoa)
 
 }
 
-void Biblioteca::preencher_estoque(std::string path)
+void Biblioteca::preencher_livros(std::string path)
 {
 
 
@@ -59,4 +70,9 @@ void Biblioteca::preencher_pessoas(std::string path)
             this->_pessoas.push_back(Pessoa(nome, senha));
         }
     }
+    catch(exception e)
+    {
+        cout << e;
+    }
 }
+
