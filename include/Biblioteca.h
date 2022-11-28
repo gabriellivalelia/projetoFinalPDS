@@ -34,3 +34,4 @@ class Biblioteca
         bool pessoa_existe(string nome);
         bool login(Pessoa pessoa);
 };
+#endif
