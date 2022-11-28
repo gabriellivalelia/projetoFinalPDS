@@ -72,7 +72,7 @@ void Biblioteca::preencher_pessoas(std::string path)
     }
     catch(exception e)
     {
-        cout << e;
+        
     }
 }
 
