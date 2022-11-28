@@ -11,15 +11,15 @@ class Livro {
         std::string _titulo;
         std::string _autor;
         std::string _genero;
-        stact unsigned int _quantidade;
+        static unsigned int _quantidade;
         std vector <Usuario:: Usuario> 
 
     public:
         Livro(
-            std::string titulo;
-            std::string autor;
-            std::string genero;
-            stact unsigned int quantidade;
+            std::string titulo,
+            std::string autor,
+            std::string genero,
+            stact unsigned int quantidade
         );
         std::string get_titulo();
         std::string get_autor();
