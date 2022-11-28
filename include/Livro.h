@@ -14,8 +14,6 @@ class Livro {
         stact unsigned int _quantidade;
         std vector <Usuario:: Usuario> 
 
-
-
     public:
         Livro(
             std::string titulo;
