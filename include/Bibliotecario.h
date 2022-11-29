@@ -16,11 +16,6 @@ class Bibliotecario : public Pessoa
         //Tipo tipo
     );
 
-    void cadastrar_usuario();
-
-    void adicionar_livros();
-
-    void excluir_livros();
 };
 
 #endif

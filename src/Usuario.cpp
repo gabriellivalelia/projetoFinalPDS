@@ -8,13 +8,6 @@ Usuario::Usuario(
     //Tipo tipo
 ) : Pessoa(nome, senha){};
 
-void Usuario::alugar_livro(Livro livro) {
-
-}
-
-void Usuario::devolver_livro(Livro livro) {
-
-}
 
 void Usuario::visualizar_livros_alugados() {
 

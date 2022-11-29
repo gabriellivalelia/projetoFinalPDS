@@ -25,6 +25,16 @@ Biblioteca::Biblioteca()
 
 }
 
+void Biblioteca::excluir_livro_alugado(Livro livro, Pessoa pessoa)
+{
+
+}
+
+void Biblioteca::adicionar_livro_alugado(Livro livro, Pessoa pessoa)
+{
+
+}
+
 void Biblioteca::update_estoque(Livro livro)
 {
 
@@ -74,5 +84,20 @@ void Biblioteca::preencher_pessoas(std::string path)
     {
         
     }
+}
+
+bool Biblioteca::pessoa_existe(string nome)
+{
+
+}
+
+bool login(Pessoa pessoa)
+{
+
+}
+
+void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
+{
+
 }
 

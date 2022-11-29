@@ -15,8 +15,6 @@ class Usuario : public Pessoa {
             string senha
             //Tipo tipo
         );
-        void alugar_livro(Livro livro);
-        void devolver_livro(Livro livro);
         void visualizar_livros_alugados();
 };
 

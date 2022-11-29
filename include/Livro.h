@@ -12,7 +12,6 @@ class Livro {
         std::string _autor;
         std::string _genero;
         unsigned int _quantidade;
-        //std::vector <Usuario> _lista_espera; 
 
     public:
         Livro(

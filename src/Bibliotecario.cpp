@@ -9,17 +9,3 @@ Bibliotecario::Bibliotecario
     //Tipo tipo
 ) : Pessoa(nome, senha){}
 
-void cadastrar_usuario(Usuario usuario)
-{
-    
-}
-
-void adicionar_livros(Livro livro)
-{
-    
-}
-
-void excluir_livros(Livro livro)
-{
-    
-}
