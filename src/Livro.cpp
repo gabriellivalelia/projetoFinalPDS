@@ -5,7 +5,7 @@ Livro::Livro(
     std::string titulo,
     std::string autor,
     std::string genero,
-    static unsigned int quantidade,
+    unsigned int quantidade
 )
 {
     _titulo = titulo;

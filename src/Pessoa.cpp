@@ -6,23 +6,29 @@ using namespace std;
 Pessoa::Pessoa(
   string nome,
   string senha
+  //Tipo tipo
 ) 
 {
     this->_nome = nome;
     this->_senha = senha;
+    //this->_tipo = tipo;
 }
 
 string Pessoa::get_nome() {
 
 }
 
-unsigned int Pessoa::get_senha() {
+string Pessoa::get_senha() {
 
 }
 
 void Pessoa::Logar(
     string nome,
-    unsigned int senha
+    string senha
 ){
 
 }
+
+// Tipo Pessoa::get_tipo(){
+
+// };

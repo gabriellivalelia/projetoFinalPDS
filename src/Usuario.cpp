@@ -1,9 +1,11 @@
 #include "Usuario.h"
 #include "Livro.h"
+#include <string>
 
 Usuario::Usuario(
     string nome,
-    unsigned int senha
+    string senha
+    //Tipo tipo
 ) : Pessoa(nome, senha){};
 
 void Usuario::alugar_livro(Livro livro) {

@@ -1,10 +1,13 @@
 #include "Bibliotecario.h"
 #include "Biblioteca.h"
+#include <string>
+
 Bibliotecario::Bibliotecario
 (
     std::string nome,
-    unsigned int senha
-):Pessoa(nome, senha);
+    string senha
+    //Tipo tipo
+) : Pessoa(nome, senha){}
 
 void cadastrar_usuario(Usuario usuario)
 {

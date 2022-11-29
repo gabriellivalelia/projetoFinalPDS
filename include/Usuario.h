@@ -12,7 +12,8 @@ class Usuario : public Pessoa {
     public:
         Usuario(
             string nome,
-            unsigned int senha
+            string senha
+            //Tipo tipo
         );
         void alugar_livro(Livro livro);
         void devolver_livro(Livro livro);

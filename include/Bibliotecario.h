@@ -4,6 +4,7 @@
 using namespace std;
 #include "Pessoa.h"
 #include "Usuario.h"
+#include <string>
 
 class Bibliotecario : public Pessoa 
 {
@@ -11,7 +12,8 @@ class Bibliotecario : public Pessoa
     Bibliotecario
     (
         string nome,
-        unsigned int senha
+        string senha
+        //Tipo tipo
     );
 
     void cadastrar_usuario();
@@ -20,3 +22,5 @@ class Bibliotecario : public Pessoa
 
     void excluir_livros();
 };
+
+#endif

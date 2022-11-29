@@ -2,7 +2,7 @@
 #define TRAB_PDS2_LIVRO_H
 
 #include "Pessoa.h"
-#include "Usuario.h"
+//#include "Usuario.h"
 #include <vector>
 #include <string>
 
@@ -12,7 +12,7 @@ class Livro {
         std::string _autor;
         std::string _genero;
         unsigned int _quantidade;
-        std::vector <Usuario> _lista_espera; 
+        //std::vector <Usuario> _lista_espera; 
 
     public:
         Livro(
@@ -25,7 +25,7 @@ class Livro {
         std::string get_autor();
         std::string get_genero();
         unsigned int get_quantidade();
-        void uppdate_quantidade();
+        void update_quantidade();
 };
 
 #endif
