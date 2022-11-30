@@ -27,12 +27,12 @@ Biblioteca::Biblioteca()
 
 void Biblioteca::excluir_livro_alugado(Livro livro, Pessoa pessoa)
 {
-
+  pessoa.excluir_livros(Livro livro);
 }
 
 void Biblioteca::adicionar_livro_alugado(Livro livro, Pessoa pessoa)
 {
-
+  pessoa.adicionar_livros(Livro livro);
 }
 
 void Biblioteca::update_estoque(Livro livro)
