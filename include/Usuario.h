@@ -16,6 +16,8 @@ class Usuario : public Pessoa {
             //Tipo tipo
         );
         void visualizar_livros_alugados();
+        void adicionar_livros();
+        void excluir_livros();
 };
 
 #endif
