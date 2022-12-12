@@ -1,48 +1,69 @@
 #include "Biblioteca.h"
-#include <iostream>
-#include <fstream>
-#include<string.h>
-#include <vector>
 
-std::vector<Livro> Biblioteca::get_livros_autor(std::string autor)
-{
-    std::vector<Livro> livros;
-    return livros;
-}
-std::vector<Livro> Biblioteca::get_livros_genero(std::string genero)
-{
-    std::vector<Livro> livros;
-    return livros;
-}
-std::vector<Livro> Biblioteca::get_livros_nome(std::string nome)
-{
-    std::vector<Livro> livros;
-    return livros;
-}
 
 Biblioteca::Biblioteca()
-{
+{}
 
+void Biblioteca::get_livros_autor(std::string autor)
+{
+   for(auto& livro : _livros_estoque)
+   {
+      if(livro.get_autor() == autor)
+      {
+      std::cout<< livro.get_titulo() << " de " << livro.get_autor() << " do gênero " << livro.get_genero() << std::endl;
+      }
+   } 
 }
 
-void Biblioteca::excluir_livro_alugado(Livro livro, Pessoa pessoa)
+void Biblioteca::get_livros_genero(std::string genero)
 {
-  pessoa.excluir_livros(Livro livro);
+   for(auto& livro : _livros_estoque)
+   {
+      if(livro.get_genero() == genero)
+      {
+      std::cout<< livro.get_titulo() << " de " << livro.get_autor() << " do gênero " << livro.get_genero() << std::endl;
+      }
+   } 
 }
 
-void Biblioteca::adicionar_livro_alugado(Livro livro, Pessoa pessoa)
+void Biblioteca::get_livros_nome(std::string nome)
 {
-  pessoa.adicionar_livros(Livro livro);
+   for(auto& livro : _livros_estoque)
+   {
+      if(livro.get_titulo() == nome)
+      {
+      std::cout<< livro.get_titulo() << " de " << livro.get_autor() << " do gênero " << livro.get_genero() << std::endl;
+      }
+   } 
 }
 
-void Biblioteca::update_estoque(Livro livro)
+ void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
 {
+   livro.update_quantidade(1);
 
+   usuario.excluir_livro_do_vetor(livro);
 }
+
+void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
+{
+  livro.update_quantidade(-1);
+
+  usuario.adicionar_livro_no_vetor(livro);
+
+} 
+
+
+// Definir como vão ser adicionados
+/* void Biblioteca::update_estoque(Livro livro)
+{
+   
+}
+
+
 void Biblioteca::update_pessoas(Pessoa pessoa)
 {
 
-}
+} */
 
 void Biblioteca::preencher_livros(std::string path)
 {
@@ -99,5 +120,4 @@ bool login(Pessoa pessoa)
 void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
 {
 
-}
-
+} */

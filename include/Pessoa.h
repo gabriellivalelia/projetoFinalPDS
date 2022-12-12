@@ -3,30 +3,28 @@
 
 #include <Livro.h>
 #include <string>
-using namespace std;
 
-// enum class Tipo {BIBLIOTECARIO, USUARIO};
 
 class Pessoa {
     public:
     private:  
-        string _nome;
-        string _senha;
-       // Tipo _tipo;
+        std::string _nome;
+        std::string _senha;
+        bool _isBibliotecario;
 
     public:
     Pessoa(
-        string nome,
-        string senha
-        //Tipo tipo
+        std::string nome,
+        std::string senha,
+        bool isBibliotecario
     );
-    string get_nome();    
-    string get_senha();
-    // Tipo get_tipo();
+    std::string get_nome();    
+    std::string get_senha();
+    bool get_tipo();
     
     void Logar(
-        string nome,
-        string senha
+        std::string nome,
+        std::string senha
     );
     };
 

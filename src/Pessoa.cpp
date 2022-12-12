@@ -1,34 +1,35 @@
 #include "Pessoa.h"
 
-#include <string> //??
-using namespace std;
 
 Pessoa::Pessoa(
-  string nome,
-  string senha
-  //Tipo tipo
+  std::string nome,
+  std::string senha,
+  bool isBibliotecario
+  
 ) 
 {
     this->_nome = nome;
     this->_senha = senha;
-    //this->_tipo = tipo;
+    this->_isBibliotecario = isBibliotecario;
 }
 
-string Pessoa::get_nome() {
-
+std::string Pessoa::get_nome() {
+    return _nome;
 }
 
-string Pessoa::get_senha() {
-
+std::string Pessoa::get_senha() {
+    return _senha;
 }
+
+bool Pessoa::get_tipo(){
+   return _isBibliotecario;
+};
 
 void Pessoa::Logar(
-    string nome,
-    string senha
+    std::string nome,
+    std::string senha
 ){
-
+    
 }
 
-// Tipo Pessoa::get_tipo(){
 
-// };

@@ -13,7 +13,6 @@ class Bibliotecario : public Pessoa
     (
         string nome,
         string senha
-        //Tipo tipo
     );
 
 };

@@ -1,32 +1,33 @@
 #include "Usuario.h"
-#include "Livro.h"
-#include <string>
+
 
 Usuario::Usuario(
-    string nome,
-    string senha
-    //Tipo tipo
-) : Pessoa(nome, senha){};
+    std::string nome,
+    std::string senha
+) : Pessoa(nome, senha, false){};
 
 
 void Usuario::visualizar_livros_alugados() {
 
+   for(auto& livro : _livros_alugados)
+   {
+      std::cout<< livro.get_titulo() << " de " << livro.get_autor() << " do gênero " << livro.get_genero() << std::endl;
+   } 
 }
 
-void adicionar_livros(Livro livro)
-{
+void Usuario::adicionar_livro_no_vetor(Livro livro) {
    _livros_alugados.push_back(livro);
 }
 
-void excluir_livros(Livro livro)
-{
-    string aux = livro.get_titulo;
-    for(auto i = listalivros.begin() ; i <listalivros.end(); i++)
-    {
-        if(aux == i -> get_titulo)
-        {
-            _livros_alugados.erase(livro);
-        }
-    }
+
+void Usuario::excluir_livro_do_vetor(Livro livro){
     
-}
+   for(auto i = _livros_alugados.begin(); i != _livros_alugados.end(); i++ )
+   {
+      if(livro.get_titulo() == i->get_titulo())
+      {
+        _livros_alugados.erase(i);
+      }
+   }
+};
+
