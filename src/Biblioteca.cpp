@@ -192,19 +192,36 @@ void Biblioteca::preencher_pessoas()
    
 }
 
-bool Biblioteca::pessoa_existe(string nome)
+bool Biblioteca::pessoa_existe(std::string nome)
 {
-   return true;
+    for( Pessoa pessoa : _pessoas)
+    {
+        if(pessoa.get_nome() == nome)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 bool login(Pessoa pessoa)
 {
-   if(pessoa_existe(pessoa.get_nome))
+  if(pessoa_existe(pessoa.get_nome()))
     {
-        std::cout<< "Digite sua senha" << std::endl;
-        std::string senha;
-        std::cin >> senha;
-        if(senha == pessoa.get_senha())
+
+        std::string nome = pessoa.get_nome();
+        std::string senhaReal;
+        for( Pessoa pessoaB : _pessoas)
+        {
+            if(pessoaB.get_nome() == nome)
+            {
+                senhaReal = pessoaB.get_senha();
+                break;
+            }
+        }
+
+
+        if(senhaReal == pessoa.get_senha())
         {
             std::cout<< "Login bem-sucedido." << std::endl;
             return true;
