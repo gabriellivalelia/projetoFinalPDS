@@ -21,6 +21,7 @@ class Usuario : public Pessoa {
 
         void excluir_livro_do_vetor(Livro livro);
 
+
 };
 
 #endif
