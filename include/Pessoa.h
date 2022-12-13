@@ -13,6 +13,12 @@ class Pessoa {
         bool _isBibliotecario;
 
     public:
+    
+     Pessoa(
+        std::string nome,
+        std::string senha
+    );
+    
     Pessoa(
         std::string nome,
         std::string senha,
