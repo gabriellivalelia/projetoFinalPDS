@@ -15,7 +15,7 @@ void Biblioteca::get_livros_autor(std::string autor)
         std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
         qtd++;
       }
-   } 
+   }
 
    if(qtd == 0)
    {
@@ -38,14 +38,14 @@ void Biblioteca::get_livros_genero(std::string genero)
       }
    }
 
-   
+
    if(qtd == 0)
    {
       std::cout<< "Lamentamos, mas não temos exemplares desse gêneror. Faça outra Pesquisa :)" << std::endl;
    }
    else{
       std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
-   } 
+   }
 }
 
 void Biblioteca::get_livros_nome(std::string nome)
@@ -58,9 +58,9 @@ void Biblioteca::get_livros_nome(std::string nome)
       {
         std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
       }
-   } 
-   
-   
+   }
+
+
    if(qtd == 0)
    {
       std::cout<< "Lamentamos, mas não temos exemplares desse título. Faça outra Pesquisa :)" << std::endl;
@@ -70,38 +70,36 @@ void Biblioteca::get_livros_nome(std::string nome)
    }
 }
 
-Pessoa Biblioteca::get_pessoa_especifica(std::string nome)
+Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
 {
-   int qtd = 0;
 
-   for(auto& pessoa : _pessoas)
+    for(auto& pessoa : _pessoas)
     {
-        if(pessoa.get_nome() == nome) return pessoa;
+        if(pessoa.get_nome() == nome)
+        {
+
+            return &pessoa;
+        }
     }
 
-    if(qtd == 0)
-    {
-      std::cout<<"Usuário não encontrado!"<<std::endl;
-    }
+    std::cout<<"Pessoa não encontrada!"<<std::endl;
+    return nullptr;
 }
 
-Livro Biblioteca::get_livro_especifico(std::string titulo)
+Livro* Biblioteca::get_livro_especifico(std::string titulo)
 {
-   int qtd = 0;
 
-   for(auto& livro :  _livros_estoque)
+    for(auto& livro : _livros_estoque)
     {
         if(livro.get_titulo() == titulo)
         {
-           qtd++;
-           return livro;
-        } 
+            std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
+            return &livro;
+        }
     }
 
-    if(qtd == 0)
-    {
-      std::cout<<"Livro não encontrado!"<<std::endl;
-    }
+    std::cout<<"Livro não encontrado!"<<std::endl;
+    return nullptr;
 }
 
 void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
@@ -113,7 +111,7 @@ void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
 
 void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
 {
-  
+
   if (livro.get_quantidade() == 0)
   {
     std::cout << "O Título escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
@@ -131,9 +129,9 @@ void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
     livro.update_quantidade(-1);
     usuario.adicionar_livro_no_vetor(livro);
   }
-  
 
-} 
+
+}
 
 void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
@@ -192,7 +190,7 @@ void Biblioteca::preencher_livros()
    _livros_estoque.push_back(dezenove);
    _livros_estoque.push_back(vinte);
    _livros_estoque.push_back(vinteEUm);
- 
+
 }
 
 
@@ -221,7 +219,7 @@ void Biblioteca::preencher_pessoas()
     _pessoas.push_back(Gabrielli);
     Usuario Pedro = Usuario("Pedro Santana", "6002ps");
     _pessoas.push_back(Pedro);
-   
+
 }
 
 bool Biblioteca::pessoa_existe(std::string nome)
@@ -250,19 +248,16 @@ bool Biblioteca::login()
     {
         std::string senhaReal;
 
-        for( Pessoa pessoaB : _pessoas)
-        {
-            if(pessoaB.get_nome() == _nome)
-            {
-                senhaReal = pessoaB.get_senha();
-                break;
-            }
-        }
+        Pessoa* logando = get_pessoa_especifica(_nome);
 
 
-        if(senhaReal == _senha)
+
+
+        if(logando->get_senha() == _senha)
         {
             std::cout<< "Login bem-sucedido." << std::endl;
+            this->_pessoaLogada = logando;
+            std::cout<< "Bem-vindo, "<<(this->_pessoaLogada)->get_nome() << std::endl;
             return true;
         }
         else
@@ -280,8 +275,8 @@ bool Biblioteca::login()
 
 void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
 {
-   
-} 
+
+}
 
 void Biblioteca::imprime_livros(){
 
