@@ -9,7 +9,7 @@ int main()
 
     BibliotecaTeste.preencher_livros();
 
-    BibliotecaTeste.imprime_livros();
+    BibliotecaTeste.get_livros_autor("Júlia Queen");
 
 
     return 0;
