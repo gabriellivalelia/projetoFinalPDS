@@ -236,7 +236,7 @@ bool Biblioteca::pessoa_existe(std::string nome)
     return false;
 }
 
-bool login()
+bool Biblioteca::login()
 {
   std::string _nome, _senha;
 
