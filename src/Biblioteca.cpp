@@ -114,7 +114,27 @@ bool Biblioteca::pessoa_existe(string nome)
 
 bool login(Pessoa pessoa)
 {
-
+   if(pessoa_existe(pessoa.get_nome))
+    {
+        std::cout<< "Digite sua senha" << std::endl;
+        std::string senha;
+        std::cin >> senha;
+        if(senha == pessoa.get_senha())
+        {
+            std::cout<< "Login bem-sucedido." << std::endl;
+            return true;
+        }
+        else
+        {
+            std::cout<< "Senha incorreta. Tente novamente" << std::endl;
+            return false;
+        }
+    }
+    else
+    {
+        std::cout<< "nome não encontrado" << std::endl;
+        return false;
+    }
 }
 
 void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
