@@ -36,7 +36,7 @@ class Biblioteca
         void adiciona_pessoas_no_vetor(Pessoa pessoa);
 
         bool pessoa_existe(std::string nome);
-        bool login(Pessoa pessoa);
+        bool login();
 
         void update_lista_espera(Livro livro, Pessoa pessoa); 
 
