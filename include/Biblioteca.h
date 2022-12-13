@@ -18,6 +18,7 @@ class Biblioteca
         std::vector<Livro>_livros_estoque;
         std::vector<Pessoa>_pessoas;
         std::vector<std::pair<Livro, std::vector<Pessoa>>> _listas_espera;
+        Pessoa* _pessoaLogada;
 
     public:
 
@@ -26,8 +27,8 @@ class Biblioteca
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
 
-        void preencher_livros(); 
-        void preencher_pessoas(); 
+        void preencher_livros();
+        void preencher_pessoas();
 
         void devolver_livro_alugado(Livro livro, Usuario usuario);
         void adicionar_livro_alugado(Livro livro, Usuario usuario);
@@ -38,13 +39,13 @@ class Biblioteca
         bool pessoa_existe(std::string nome);
         bool login();
 
-        void update_lista_espera(Livro livro, Pessoa pessoa); 
+        void update_lista_espera(Livro livro, Pessoa pessoa);
 
         void imprime_livros();
         void imprime_pessoas();
 
-        Pessoa get_pessoa_especifica(std::string nome);
-        Livro get_livro_especifico(std::string titulo);
+        Pessoa* get_pessoa_especifica(std::string nome);
+        Livro* get_livro_especifico(std::string titulo);
 
 };
 #endif
