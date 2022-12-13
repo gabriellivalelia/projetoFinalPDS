@@ -8,6 +8,7 @@
 #include <vector>
 #include "Livro.h"
 #include "Usuario.h"
+#include "Bibliotecario.h"
 
 
 class Biblioteca
@@ -17,9 +18,6 @@ class Biblioteca
         std::vector<Pessoa>_pessoas;
         std::vector<std::pair<Livro, std::vector<Pessoa>>> _listas_espera;
 
-        std::fstream _arquivo_Livros;
-        std::fstream _arquivo_pessoas;
-
     public:
 
         Biblioteca();
@@ -27,19 +25,22 @@ class Biblioteca
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
 
-       /*  void preencher_livros(std::string path);//trocar pra private??
-        void preencher_pessoas(std::string path); */
+        void preencher_livros(); 
+        void preencher_pessoas(); 
 
         void devolver_livro_alugado(Livro livro, Usuario usuario);
         void adicionar_livro_alugado(Livro livro, Usuario usuario);
 
-        /*void update_estoque(Livro livro);
-        void update_pessoas(Pessoa pessoa);
+        void adiciona_livros_no_estoque(Livro livro);
+        void adiciona_pessoas_no_vetor(Pessoa pessoa);
 
         bool pessoa_existe(string nome);
         bool login(Pessoa pessoa);
 
-        void update_lista_espera(Livro livro, Pessoa pessoa); */
+        void update_lista_espera(Livro livro, Pessoa pessoa); 
+
+        void imprime_livros();
+        void imprime_pessoas();
 
 };
 #endif

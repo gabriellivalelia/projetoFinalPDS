@@ -11,7 +11,7 @@ void Usuario::visualizar_livros_alugados() {
 
    for(auto& livro : _livros_alugados)
    {
-      std::cout<< livro.get_titulo() << " de " << livro.get_autor() << " do gênero " << livro.get_genero() << std::endl;
+      std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << std::endl;
    } 
 }
 
