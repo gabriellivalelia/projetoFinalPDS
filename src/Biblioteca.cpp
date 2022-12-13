@@ -70,7 +70,41 @@ void Biblioteca::get_livros_nome(std::string nome)
    }
 }
 
- void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
+Pessoa Biblioteca::get_pessoa_especifica(std::string nome)
+{
+   int qtd = 0;
+
+   for(auto& pessoa : _pessoas)
+    {
+        if(pessoa.get_nome() == nome) return pessoa;
+    }
+
+    if(qtd == 0)
+    {
+      std::cout<<"Usuário não encontrado!"<<std::endl;
+    }
+}
+
+Livro Biblioteca::get_livro_especifico(std::string titulo)
+{
+   int qtd = 0;
+
+   for(auto& livro :  _livros_estoque)
+    {
+        if(livro.get_titulo() == titulo)
+        {
+           qtd++;
+           return livro;
+        } 
+    }
+
+    if(qtd == 0)
+    {
+      std::cout<<"Livro não encontrado!"<<std::endl;
+    }
+}
+
+void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
 {
    livro.update_quantidade(1);
 
@@ -100,8 +134,6 @@ void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
   
 
 } 
-
-
 
 void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
@@ -194,12 +226,22 @@ void Biblioteca::preencher_pessoas()
 
 bool Biblioteca::pessoa_existe(string nome)
 {
-   return true;
+   int qtd = 0;
+
+   for(auto& pessoa : _pessoas)
+   {
+      if(pessoa.get_nome() == nome) return true;
+   }
+
+    if(qtd == 0) return false;
+    
 }
 
 bool login(Pessoa pessoa)
 {
-   if(pessoa_existe(pessoa.get_nome))
+   std::string nomeTentativaLogin = pessoa.get_nome();
+
+   if(this->pessoa_existe(nomeTentativaLogin))
     {
         std::cout<< "Digite sua senha" << std::endl;
         std::string senha;
@@ -224,7 +266,7 @@ bool login(Pessoa pessoa)
 
 void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
 {
-
+   
 } 
 
 void Biblioteca::imprime_livros(){

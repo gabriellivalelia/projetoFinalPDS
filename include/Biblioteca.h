@@ -7,6 +7,7 @@
 #include<string.h>
 #include <vector>
 #include "Livro.h"
+#include "Pessoa.h"
 #include "Usuario.h"
 #include "Bibliotecario.h"
 
@@ -41,6 +42,9 @@ class Biblioteca
 
         void imprime_livros();
         void imprime_pessoas();
+
+        Pessoa get_pessoa_especifica(std::string nome);
+        Livro get_livro_especifico(std::string titulo);
 
 };
 #endif
