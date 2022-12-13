@@ -34,7 +34,7 @@ class Biblioteca
         void adiciona_livros_no_estoque(Livro livro);
         void adiciona_pessoas_no_vetor(Pessoa pessoa);
 
-        bool pessoa_existe(string nome);
+        bool pessoa_existe(std::string nome);
         bool login(Pessoa pessoa);
 
         void update_lista_espera(Livro livro, Pessoa pessoa); 
