@@ -204,16 +204,23 @@ bool Biblioteca::pessoa_existe(std::string nome)
     return false;
 }
 
-bool login(Pessoa pessoa)
+bool login()
 {
-  if(pessoa_existe(pessoa.get_nome()))
-    {
+  std::string _nome, _senha;
 
-        std::string nome = pessoa.get_nome();
+    std::cout<< "Digite seu nome" << std::endl;
+    getline(cin ,_nome);
+
+    std::cout<< "Digite sua senha" << std::endl;
+    getline(cin ,_senha);
+
+    if(pessoa_existe(_nome))
+    {
         std::string senhaReal;
+
         for( Pessoa pessoaB : _pessoas)
         {
-            if(pessoaB.get_nome() == nome)
+            if(pessoaB.get_nome() == _nome)
             {
                 senhaReal = pessoaB.get_senha();
                 break;
@@ -221,7 +228,7 @@ bool login(Pessoa pessoa)
         }
 
 
-        if(senhaReal == pessoa.get_senha())
+        if(senhaReal == _senha)
         {
             std::cout<< "Login bem-sucedido." << std::endl;
             return true;
