@@ -18,5 +18,9 @@ int main()
 
     BibliotecaTeste.add_lista_espera(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")));
     BibliotecaTeste.ver_listas_espera();
+    BibliotecaTeste.add_lista_espera(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")));
+    BibliotecaTeste.ver_listas_espera();
+    BibliotecaTeste.devolver_livro_alugado(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")), *(dynamic_cast<Usuario*>(BibliotecaTeste.get_pessoa_especifica("Pedro Santana"))));
+    BibliotecaTeste.update_lista_de_espera();
     return 0;
 }

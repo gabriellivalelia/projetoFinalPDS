@@ -319,6 +319,24 @@ void Biblioteca::add_lista_espera(Livro livro)
 
 }
 
+
+void Biblioteca::update_lista_de_espera(){
+
+
+    for(auto& par : _listas_espera)
+    {
+        if(par.first.get_quantidade() > 0 )
+        {
+           /* par.first.update_quantidade(-1);
+           (dynamic_cast<Usuario*>(par.second.begin()))->adicionar_livro_no_vetor(par.first);
+           std::cout<<"Livro " << par.first.get_titulo() << " alugado para " << dynamic_cast<Usuario*>(par.second.begin())->get_nome << std::endl;  */
+           par.second.erase(par.second.begin());
+           
+        }
+    }
+}
+
+
 void Biblioteca::imprime_livros(){
 
     for(auto& livro : _livros_estoque)

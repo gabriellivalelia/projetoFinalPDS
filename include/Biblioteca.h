@@ -41,6 +41,7 @@ class Biblioteca
 
         void add_lista_espera(Livro livro);
         void ver_listas_espera();
+        void update_lista_de_espera();
 
         void imprime_livros();
         void imprime_pessoas();
