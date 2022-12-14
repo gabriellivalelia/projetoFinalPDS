@@ -1,5 +1,5 @@
 #include "Biblioteca.h"
-
+#include <utility>
 
 Biblioteca::Biblioteca()
 {}
@@ -18,13 +18,15 @@ void Biblioteca::get_livros_autor(std::string autor)
    }
 
    if(qtd == 0)
-   {
+   {  
+      //exceção
       std::cout<< "Lamentamos, mas não temos exemplares desse autor. Faça outra Pesquisa :)" << std::endl;
    }
    else{
       std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
+
 
 void Biblioteca::get_livros_genero(std::string genero)
 {
@@ -41,12 +43,14 @@ void Biblioteca::get_livros_genero(std::string genero)
 
    if(qtd == 0)
    {
+      //exceção
       std::cout<< "Lamentamos, mas não temos exemplares desse gêneror. Faça outra Pesquisa :)" << std::endl;
    }
    else{
       std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
+
 
 void Biblioteca::get_livros_nome(std::string nome)
 {
@@ -63,12 +67,20 @@ void Biblioteca::get_livros_nome(std::string nome)
 
    if(qtd == 0)
    {
+      //exceção
       std::cout<< "Lamentamos, mas não temos exemplares desse título. Faça outra Pesquisa :)" << std::endl;
    }
    else{
       std::cout<< "Quer alugar um exemplar? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
+
+
+Pessoa* Biblioteca::get_pessoa_logada()
+{
+    return _pessoaLogada;
+}
+
 
 Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
 {
@@ -82,9 +94,11 @@ Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
         }
     }
 
+    //exceção
     std::cout<<"Pessoa não encontrada!"<<std::endl;
     return nullptr;
 }
+
 
 Livro* Biblioteca::get_livro_especifico(std::string titulo)
 {
@@ -98,21 +112,29 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
         }
     }
 
+    //exceção
     std::cout<<"Livro não encontrado!"<<std::endl;
     return nullptr;
 }
 
-void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
-{
-   livro.update_quantidade(1);
 
-   usuario.excluir_livro_do_vetor(livro);
+void Biblioteca::devolver_livro_alugado(std::string titulo)
+{
+   Usuario* logado = (Usuario*)get_pessoa_logada();
+   Livro* livro = get_livro_especifico(titulo);
+
+   livro->update_quantidade(1);
+   logado->excluir_livro_do_vetor(*livro);
+   update_lista_de_espera();
 }
 
-void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
-{
 
-  if (livro.get_quantidade() == 0)
+void Biblioteca::adicionar_livro_alugado(std::string titulo)
+{
+  Usuario* logado = (Usuario*)get_pessoa_logada();
+  Livro* livro = get_livro_especifico(titulo);
+
+  if (livro->get_quantidade() == 0)
   {
     std::cout << "O Título escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
 
@@ -121,15 +143,13 @@ void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
 
     if(resposta == "Y")
     {
-        //std::pair<Livro, std::vector<Pessoa>> parLivroPessoa;
-        std::cout<< "Bleh";
+        add_lista_espera(*livro);
     }
   }
   else{
-    livro.update_quantidade(-1);
-    usuario.adicionar_livro_no_vetor(livro);
+    livro->update_quantidade(-1);
+    logado->adicionar_livro_no_vetor(*livro);
   }
-
 
 }
 
@@ -138,15 +158,13 @@ void Biblioteca::adiciona_livros_no_estoque(Livro livro)
    _livros_estoque.push_back(livro);
 }
 
-
 void Biblioteca::adiciona_pessoas_no_vetor(Pessoa pessoa)
 {
    _pessoas.push_back(pessoa);
 }
-
 void Biblioteca::preencher_livros()
 {
-   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 8 );
+   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 0 );
    Livro dois = Livro("O Duque e eu", "Júlia Queen", "Romance" , 4  );
    Livro tres = Livro( "Diário de um banana: Segurando Vela", "Jeff Kenny ", "InfantoJuvenil", 5 );
    Livro quatro = Livro("Diário de um banana: Vai ou Racha", "Jeff Kenny ", "InfantoJuvenil", 3 );
@@ -192,8 +210,6 @@ void Biblioteca::preencher_livros()
    _livros_estoque.push_back(vinteEUm);
 
 }
-
-
 void Biblioteca::preencher_pessoas()
 {
     Bibliotecario Ana = Bibliotecario("Ana Sales", "5839ab");
@@ -234,6 +250,22 @@ bool Biblioteca::pessoa_existe(std::string nome)
     return false;
 }
 
+void Biblioteca::ver_listas_espera()
+{
+
+    for(auto& par : _listas_espera)
+    {
+        std::cout << "Livro: " << par.first.get_titulo() << std::endl;
+
+        for(auto& pessoa_espera : par.second)
+        {
+            std::cout << "-" << pessoa_espera.get_nome();
+        }
+        std::cout << std::endl;
+    }
+}
+
+
 bool Biblioteca::login()
 {
   std::string _nome, _senha;
@@ -249,9 +281,6 @@ bool Biblioteca::login()
         std::string senhaReal;
 
         Pessoa* logando = get_pessoa_especifica(_nome);
-
-
-
 
         if(logando->get_senha() == _senha)
         {
@@ -273,9 +302,112 @@ bool Biblioteca::login()
     }
 }
 
-void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
-{
+bool Biblioteca::logout(){
+   
+   std::cout << "Deseja realmente fazer logout? (Y/N)" << std::endl;
 
+   std::string resposta;
+   
+   std::cin >> resposta;
+
+   if(resposta == "Y"){
+       
+      _pessoaLogada = nullptr;
+      std::cout << "Logout realizado com sucesso!" << std::endl;
+      return true;
+   }
+   else if(resposta == "N"){
+      std::cout << "Logout cancelado!" << std::endl;
+      return false;
+   }
+   else{
+     // Pôr uma exceção aqui
+     return false;
+   }
+
+}
+
+void Biblioteca::add_lista_espera(Livro livro)
+{
+    bool pessoaNaLista = false;
+    bool livroNaLista = false;
+
+    for(auto& par : _listas_espera)
+    {
+        if(par.first.get_titulo() == livro.get_titulo())
+        {
+            livroNaLista = true;
+
+            if(livroNaLista)
+            {
+                for(auto& pessoa_espera : par.second)
+                {
+                    if(pessoa_espera.get_nome() == _pessoaLogada->get_nome())
+                    {
+                        pessoaNaLista = true;
+                        std::cout << "Voce ja esta na lista de espera para este livro, tenha paciencia" << std::endl;
+                        break;
+                    }
+                }
+
+                if(!pessoaNaLista)
+                {
+                    par.second.push_back(*_pessoaLogada);
+                    std::cout << "Pronto! Assim que esse exemplar estiver disponível ele entrará ele será alocado para você!" << std::endl;
+                }
+            }
+        }
+    }
+
+    if(!livroNaLista)
+    {
+        std::pair<int, char> as;
+        std::vector<Pessoa>pessoas;
+        pessoas.push_back(*_pessoaLogada);
+
+        _listas_espera.push_back(make_pair(livro, pessoas));
+        std::cout << "Pronto! Assim que esse exemplar estiver disponível ele entrará ele será alocado para você!" << std::endl;
+    }
+
+}
+
+
+
+void Biblioteca::limpar_lista_de_espera(){
+
+    auto it = _listas_espera.begin();
+
+    while ( it != _listas_espera.end())
+    {
+        if (it->second.size() == 0)
+        {
+            it = _listas_espera.erase(it);
+        }
+        else
+        {
+            it++;
+        }  
+    }
+
+}
+
+void Biblioteca::update_lista_de_espera(){
+
+
+    for(auto& par : _listas_espera)
+    {
+        if(par.first.get_quantidade() > 0 )
+        {
+           par.first.update_quantidade(-1);
+           Usuario* aux = (Usuario*)&par.second[0];
+           aux->adicionar_livro_no_vetor(par.first);
+           //std::cout<<"Livro " << par.first.get_titulo() << " alugado para " << aux->get_nome() << std::endl; 
+           par.second.erase(par.second.begin());
+           
+        }
+    }
+
+    limpar_lista_de_espera();
 }
 
 void Biblioteca::imprime_livros(){

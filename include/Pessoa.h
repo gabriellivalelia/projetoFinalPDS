@@ -26,12 +26,9 @@ class Pessoa {
     );
     std::string get_nome();    
     std::string get_senha();
-    bool get_tipo();
+
+    virtual bool get_tipo();
     
-    void Logar(
-        std::string nome,
-        std::string senha
-    );
-    };
+};
 
 #endif

@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <fstream>
-#include<string.h>
+#include <string.h>
 #include <vector>
 #include "Livro.h"
 #include "Pessoa.h"
@@ -26,20 +26,26 @@ class Biblioteca
         void get_livros_nome(std::string nome);
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
+        Pessoa* get_pessoa_logada();
 
         void preencher_livros();
         void preencher_pessoas();
 
-        void devolver_livro_alugado(Livro livro, Usuario usuario);
-        void adicionar_livro_alugado(Livro livro, Usuario usuario);
+        void devolver_livro_alugado(std::string titulo);
+        void adicionar_livro_alugado(std::string titulo);
 
         void adiciona_livros_no_estoque(Livro livro);
         void adiciona_pessoas_no_vetor(Pessoa pessoa);
 
         bool pessoa_existe(std::string nome);
-        bool login();
 
-        void update_lista_espera(Livro livro, Pessoa pessoa);
+        bool login();
+        bool logout();
+
+        void add_lista_espera(Livro livro);
+        void ver_listas_espera();
+        void update_lista_de_espera();
+        void limpar_lista_de_espera();
 
         void imprime_livros();
         void imprime_pessoas();

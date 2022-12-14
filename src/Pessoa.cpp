@@ -32,13 +32,8 @@ std::string Pessoa::get_senha() {
 
 bool Pessoa::get_tipo(){
    return _isBibliotecario;
-};
-
-void Pessoa::Logar(
-    std::string nome,
-    std::string senha
-){
-    
 }
+
+
 
 
