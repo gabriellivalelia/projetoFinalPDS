@@ -120,7 +120,7 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
 
 void Biblioteca::devolver_livro_alugado(std::string titulo)
 {
-   Usuario* logado = (Usuario*)get_pessoa_logada();
+   Usuario* logado = (Usuario*) _pessoaLogada;
    Livro* livro = get_livro_especifico(titulo);
 
    livro->update_quantidade(1);
@@ -131,7 +131,7 @@ void Biblioteca::devolver_livro_alugado(std::string titulo)
 
 void Biblioteca::adicionar_livro_alugado(std::string titulo)
 {
-  Usuario* logado = (Usuario*)get_pessoa_logada();
+  Usuario* logado = (Usuario*) _pessoaLogada;
   Livro* livro = get_livro_especifico(titulo);
 
   if (livro->get_quantidade() == 0)
@@ -144,6 +144,9 @@ void Biblioteca::adicionar_livro_alugado(std::string titulo)
     if(resposta == "Y")
     {
         add_lista_espera(*livro);
+    }
+    else if(resposta == "N"){
+        std::cout << "Certo! Pesquise outro título" << std::endl;
     }
   }
   else{
