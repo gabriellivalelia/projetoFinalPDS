@@ -67,6 +67,13 @@ void Biblioteca::get_livros_nome(std::string nome)
       std::cout<< "Quer alugar um exemplar? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
+
+Pessoa* Biblioteca::get_pessoa_logada()
+{
+    return _pessoaLogada;
+}
+
+
 Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
 {
 
@@ -100,8 +107,8 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
 void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
 {
    livro.update_quantidade(1);
-
    usuario.excluir_livro_do_vetor(livro);
+   std::cout<<"Foi";
 }
 void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
 {
@@ -254,9 +261,6 @@ bool Biblioteca::login()
 
         Pessoa* logando = get_pessoa_especifica(_nome);
 
-
-
-
         if(logando->get_senha() == _senha)
         {
             std::cout<< "Login bem-sucedido." << std::endl;
@@ -275,6 +279,31 @@ bool Biblioteca::login()
         std::cout<< "nome não encontrado" << std::endl;
         return false;
     }
+}
+
+bool Biblioteca::logout(){
+   
+   std::cout << "Deseja realmente fazer logout? (Y/N)" << std::endl;
+
+   std::string resposta;
+   
+   std::cin >> resposta;
+
+   if(resposta == "Y"){
+       
+      _pessoaLogada == nullptr;
+      std::cout << "Logout realizado com sucesso!" << std::endl;
+      return true;
+   }
+   else if(resposta == "N"){
+      std::cout << "Logout cancelado!" << std::endl;
+      return false;
+   }
+   else{
+     // Pôr uma exceção aqui
+     return false;
+   }
+
 }
 
 void Biblioteca::add_lista_espera(Livro livro)

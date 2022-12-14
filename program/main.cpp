@@ -1,5 +1,7 @@
 #include <iostream>
 #include "Biblioteca.h"
+#include "Usuario.h"
+
 
 int main()
 {
@@ -15,12 +17,14 @@ int main()
         //codigo vai ficar enrolando aqui enquanto o login não for realizado
     }
 
+    Usuario* Pedro = (Usuario*)BibliotecaTeste.get_pessoa_logada();
+    std::cout<< BibliotecaTeste.get_pessoa_logada() << std::endl;
+    std::cout<< (Usuario*)BibliotecaTeste.get_pessoa_logada()<< std::endl;
+
 
     BibliotecaTeste.add_lista_espera(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")));
     BibliotecaTeste.ver_listas_espera();
-    BibliotecaTeste.add_lista_espera(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")));
-    BibliotecaTeste.ver_listas_espera();
-    BibliotecaTeste.devolver_livro_alugado(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")), *(dynamic_cast<Usuario*>(BibliotecaTeste.get_pessoa_especifica("Pedro Santana"))));
+    BibliotecaTeste.devolver_livro_alugado(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")), *Pedro );
     BibliotecaTeste.update_lista_de_espera();
     return 0;
 }

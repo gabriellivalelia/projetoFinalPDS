@@ -26,6 +26,7 @@ class Biblioteca
         void get_livros_nome(std::string nome);
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
+        Pessoa* get_pessoa_logada();
 
         void preencher_livros();
         void preencher_pessoas();
@@ -37,7 +38,9 @@ class Biblioteca
         void adiciona_pessoas_no_vetor(Pessoa pessoa);
 
         bool pessoa_existe(std::string nome);
+
         bool login();
+        bool logout();
 
         void add_lista_espera(Livro livro);
         void ver_listas_espera();
