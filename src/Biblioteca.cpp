@@ -76,11 +76,6 @@ void Biblioteca::get_livros_nome(std::string nome)
 }
 
 
-Pessoa* Biblioteca::get_pessoa_logada()
-{
-    return _pessoaLogada;
-}
-
 
 Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
 {
