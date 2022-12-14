@@ -31,8 +31,8 @@ class Biblioteca
         void preencher_livros();
         void preencher_pessoas();
 
-        void devolver_livro_alugado(Livro livro, Usuario usuario);
-        void adicionar_livro_alugado(Livro livro, Usuario usuario);
+        void devolver_livro_alugado(std::string titulo);
+        void adicionar_livro_alugado(std::string titulo);
 
         void adiciona_livros_no_estoque(Livro livro);
         void adiciona_pessoas_no_vetor(Pessoa pessoa);
