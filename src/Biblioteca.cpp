@@ -291,7 +291,7 @@ bool Biblioteca::logout(){
 
    if(resposta == "Y"){
        
-      _pessoaLogada == nullptr;
+      _pessoaLogada = nullptr;
       std::cout << "Logout realizado com sucesso!" << std::endl;
       return true;
    }
@@ -356,9 +356,10 @@ void Biblioteca::update_lista_de_espera(){
     {
         if(par.first.get_quantidade() > 0 )
         {
-           /* par.first.update_quantidade(-1);
-           (dynamic_cast<Usuario*>(par.second.begin()))->adicionar_livro_no_vetor(par.first);
-           std::cout<<"Livro " << par.first.get_titulo() << " alugado para " << dynamic_cast<Usuario*>(par.second.begin())->get_nome << std::endl;  */
+           par.first.update_quantidade(-1);
+           Usuario* aux = (Usuario*)&par.second[0];
+           aux->adicionar_livro_no_vetor(par.first);
+           std::cout<<"Livro " << par.first.get_titulo() << " alugado para " << aux->get_nome() << std::endl; 
            par.second.erase(par.second.begin());
            
         }
