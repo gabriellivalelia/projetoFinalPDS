@@ -26,7 +26,7 @@ class Biblioteca
         void get_livros_nome(std::string nome);
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
-        Pessoa* get_pessoa_logada();
+        
 
         void preencher_livros();
         void preencher_pessoas();
