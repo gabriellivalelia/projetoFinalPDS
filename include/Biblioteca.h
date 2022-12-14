@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include <fstream>
-#include<string.h>
+#include <string.h>
 #include <vector>
 #include "Livro.h"
 #include "Pessoa.h"
@@ -39,7 +39,8 @@ class Biblioteca
         bool pessoa_existe(std::string nome);
         bool login();
 
-        void update_lista_espera(Livro livro, Pessoa pessoa);
+        void add_lista_espera(Livro livro);
+        void ver_listas_espera();
 
         void imprime_livros();
         void imprime_pessoas();

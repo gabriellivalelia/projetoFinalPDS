@@ -1,5 +1,5 @@
 #include "Biblioteca.h"
-
+#include <utility>
 
 Biblioteca::Biblioteca()
 {}
@@ -25,7 +25,6 @@ void Biblioteca::get_livros_autor(std::string autor)
       std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
-
 void Biblioteca::get_livros_genero(std::string genero)
 {
    int qtd = 0;
@@ -47,7 +46,6 @@ void Biblioteca::get_livros_genero(std::string genero)
       std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
-
 void Biblioteca::get_livros_nome(std::string nome)
 {
    int qtd = 0;
@@ -69,7 +67,6 @@ void Biblioteca::get_livros_nome(std::string nome)
       std::cout<< "Quer alugar um exemplar? Digite \"Alugar\" para continuar."<< std::endl;
    }
 }
-
 Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
 {
 
@@ -85,7 +82,6 @@ Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
     std::cout<<"Pessoa não encontrada!"<<std::endl;
     return nullptr;
 }
-
 Livro* Biblioteca::get_livro_especifico(std::string titulo)
 {
 
@@ -101,14 +97,12 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
     std::cout<<"Livro não encontrado!"<<std::endl;
     return nullptr;
 }
-
 void Biblioteca::devolver_livro_alugado(Livro livro, Usuario usuario)
 {
    livro.update_quantidade(1);
 
    usuario.excluir_livro_do_vetor(livro);
 }
-
 void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
 {
 
@@ -132,21 +126,17 @@ void Biblioteca::adicionar_livro_alugado(Livro livro, Usuario usuario)
 
 
 }
-
 void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
    _livros_estoque.push_back(livro);
 }
-
-
 void Biblioteca::adiciona_pessoas_no_vetor(Pessoa pessoa)
 {
    _pessoas.push_back(pessoa);
 }
-
 void Biblioteca::preencher_livros()
 {
-   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 8 );
+   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 0 );
    Livro dois = Livro("O Duque e eu", "Júlia Queen", "Romance" , 4  );
    Livro tres = Livro( "Diário de um banana: Segurando Vela", "Jeff Kenny ", "InfantoJuvenil", 5 );
    Livro quatro = Livro("Diário de um banana: Vai ou Racha", "Jeff Kenny ", "InfantoJuvenil", 3 );
@@ -192,8 +182,6 @@ void Biblioteca::preencher_livros()
    _livros_estoque.push_back(vinteEUm);
 
 }
-
-
 void Biblioteca::preencher_pessoas()
 {
     Bibliotecario Ana = Bibliotecario("Ana Sales", "5839ab");
@@ -234,6 +222,22 @@ bool Biblioteca::pessoa_existe(std::string nome)
     return false;
 }
 
+void Biblioteca::ver_listas_espera()
+{
+
+    for(auto& par : _listas_espera)
+    {
+        std::cout << "Livro: " << par.first.get_titulo() << std::endl;
+
+        for(auto& pessoa_espera : par.second)
+        {
+            std::cout << "-" << pessoa_espera.get_nome();
+        }
+        std::cout << std::endl;
+    }
+}
+
+
 bool Biblioteca::login()
 {
   std::string _nome, _senha;
@@ -273,8 +277,45 @@ bool Biblioteca::login()
     }
 }
 
-void Biblioteca::update_lista_espera(Livro livro, Pessoa pessoa)
+void Biblioteca::add_lista_espera(Livro livro)
 {
+    bool pessoaNaLista = false;
+    bool livroNaLista = false;
+
+    for(auto& par : _listas_espera)
+    {
+        if(par.first.get_titulo() == livro.get_titulo())
+        {
+            livroNaLista = true;
+
+            if(livroNaLista)
+            {
+                for(auto& pessoa_espera : par.second)
+                {
+                    if(pessoa_espera.get_nome() == _pessoaLogada->get_nome())
+                    {
+                        pessoaNaLista = true;
+                        std::cout << "Voce ja esta na lista de espera para este livro, tenha paciencia" << std::endl;
+                        break;
+                    }
+                }
+
+                if(!pessoaNaLista)
+                {
+                    par.second.push_back(*_pessoaLogada);
+                }
+            }
+        }
+    }
+
+    if(!livroNaLista)
+    {
+        std::pair<int, char> as;
+        std::vector<Pessoa>pessoas;
+        pessoas.push_back(*_pessoaLogada);
+
+        _listas_espera.push_back(make_pair(livro, pessoas));
+    }
 
 }
 

@@ -15,5 +15,8 @@ int main()
         //codigo vai ficar enrolando aqui enquanto o login não for realizado
     }
 
+
+    BibliotecaTeste.add_lista_espera(*(BibliotecaTeste.get_livro_especifico("O Visconde que me amava")));
+    BibliotecaTeste.ver_listas_espera();
     return 0;
 }
