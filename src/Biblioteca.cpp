@@ -349,6 +349,25 @@ void Biblioteca::add_lista_espera(Livro livro)
 }
 
 
+
+void Biblioteca::limpar_lista_de_espera(){
+
+    auto it = _listas_espera.begin();
+
+    while ( it != _listas_espera.end())
+    {
+        if (it->second.size() == 0)
+        {
+            it = _listas_espera.erase(it);
+        }
+        else
+        {
+            it++;
+        }  
+    }
+
+}
+
 void Biblioteca::update_lista_de_espera(){
 
 
@@ -364,8 +383,9 @@ void Biblioteca::update_lista_de_espera(){
            
         }
     }
-}
 
+    limpar_lista_de_espera();
+}
 
 void Biblioteca::imprime_livros(){
 
