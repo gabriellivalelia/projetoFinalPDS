@@ -8,10 +8,16 @@ Usuario::Usuario(
 
 
 void Usuario::visualizar_livros_alugados() {
-
-   for(auto& livro : _livros_alugados)
+   
+   if(_livros_alugados.size() == 0)
    {
-      std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << std::endl;
+      std::cout << "Voce nao tem livros alocados" << std::endl << std::endl;
+   }
+   else{
+      for(auto livro = _livros_alugados.begin(); livro != _livros_alugados.end(); livro++ )
+      {
+         std::cout<< livro->get_titulo() << ", escrito por " << livro->get_autor() << " e do gênero " << livro->get_genero() << std::endl;
+      }
    } 
 }
 
@@ -27,6 +33,7 @@ void Usuario::excluir_livro_do_vetor(Livro livro){
       if(livro.get_titulo() == i->get_titulo())
       {
         _livros_alugados.erase(i);
+        break;
       }
    }
 };

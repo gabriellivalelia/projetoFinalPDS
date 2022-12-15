@@ -12,18 +12,18 @@ void Biblioteca::get_livros_autor(std::string autor)
    {
       if(livro.get_autor() == autor)
       {
-        std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
+        std::cout<< livro.get_titulo() << ", por " << livro.get_autor() << ". Genero :" << livro.get_genero() << ". Exemplares Disponiveis: " << livro.get_quantidade() << std::endl;
         qtd++;
       }
    }
 
+   std::cout<<std::endl;
+
    if(qtd == 0)
-   {  
+   {
       //exceção
-      std::cout<< "Lamentamos, mas não temos exemplares desse autor. Faça outra Pesquisa :)" << std::endl;
-   }
-   else{
-      std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
+      std::cout<< "Lamentamos, mas nao temos exemplares desse autor. Realize outra Pesquisa :)" << std::endl;
+      std::cout<<std::endl;
    }
 }
 
@@ -36,23 +36,23 @@ void Biblioteca::get_livros_genero(std::string genero)
    {
       if(livro.get_genero() == genero)
       {
-        std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
+        std::cout<< livro.get_titulo() << ", por " << livro.get_autor() << ". Genero :" << livro.get_genero() << ". Exemplares Disponiveis: " << livro.get_quantidade() << std::endl;
+        qtd++;
       }
    }
-
+   std::cout<<std::endl;
 
    if(qtd == 0)
    {
       //exceção
-      std::cout<< "Lamentamos, mas não temos exemplares desse gêneror. Faça outra Pesquisa :)" << std::endl;
-   }
-   else{
-      std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
+      std::cout<< "Lamentamos, mas nao temos exemplares desse genero. Faça outra Pesquisa :)" << std::endl;
+      std::cout<<std::endl;
+
    }
 }
 
 
-void Biblioteca::get_livros_nome(std::string nome)
+bool Biblioteca::get_livros_nome(std::string nome)
 {
    int qtd = 0;
 
@@ -60,37 +60,56 @@ void Biblioteca::get_livros_nome(std::string nome)
    {
       if(livro.get_titulo() == nome)
       {
-        std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
+        std::cout<< livro.get_titulo() << ", por " << livro.get_autor() << ". Genero :" << livro.get_genero() << ". Exemplares Disponiveis: " << livro.get_quantidade() << std::endl;
+        qtd++;
+        break;
       }
    }
-
-
    if(qtd == 0)
    {
       //exceção
-      std::cout<< "Lamentamos, mas não temos exemplares desse título. Faça outra Pesquisa :)" << std::endl;
+      std::cout<< "Lamentamos, mas nao temos exemplares desse titulo. Faça outra Pesquisa :)" << std::endl;
+      return false;
    }
    else{
-      std::cout<< "Quer alugar um exemplar? Digite \"Alugar\" para continuar."<< std::endl;
+      return true;
+
    }
 }
 
 
 
-Pessoa* Biblioteca::get_pessoa_especifica(std::string nome)
+Usuario* Biblioteca::get_usuario_especifico(std::string nome)
 {
 
-    for(auto& pessoa : _pessoas)
+    for(auto& usuario : _usuarios)
     {
-        if(pessoa.get_nome() == nome)
+        if(usuario->get_nome() == nome)
         {
 
-            return &pessoa;
+            return usuario;
         }
     }
 
     //exceção
-    std::cout<<"Pessoa não encontrada!"<<std::endl;
+    //std::cout<<"Pessoa nao encontrada!"<<std::endl;
+    return nullptr;
+}
+
+Bibliotecario* Biblioteca::get_bibliotecario_especifico(std::string nome)
+{
+
+    for(auto& bibliotecario : _bibliotecarios)
+    {
+        if(bibliotecario->get_nome() == nome)
+        {
+
+            return bibliotecario;
+        }
+    }
+
+    //exceção
+    //std::cout<<"Pessoa nao encontrada!"<<std::endl;
     return nullptr;
 }
 
@@ -102,67 +121,85 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
     {
         if(livro.get_titulo() == titulo)
         {
-            std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
+            //std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
             return &livro;
         }
     }
 
     //exceção
-    std::cout<<"Livro não encontrado!"<<std::endl;
+    //std::cout<<"Livro nao encontrado!"<<std::endl;
     return nullptr;
 }
 
 
 void Biblioteca::devolver_livro_alugado(std::string titulo)
 {
-   Usuario* logado = (Usuario*) _pessoaLogada;
    Livro* livro = get_livro_especifico(titulo);
 
-   livro->update_quantidade(1);
-   logado->excluir_livro_do_vetor(*livro);
+   livro->update_quantidade(1); 
+   _usuarioLogado->excluir_livro_do_vetor(*livro);
    update_lista_de_espera();
+
+   std::cout<<"Livro devolvido com sucesso! Obrigada pelo cuidado!" <<std::endl <<std::endl;
 }
 
 
 void Biblioteca::adicionar_livro_alugado(std::string titulo)
 {
-  Usuario* logado = (Usuario*) _pessoaLogada;
-  Livro* livro = get_livro_especifico(titulo);
+    Livro* livro = get_livro_especifico(titulo);
+    
 
-  if (livro->get_quantidade() == 0)
-  {
-    std::cout << "O Título escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
-
-    std::string resposta;
-    std::cin >> resposta; ;
-
-    if(resposta == "Y")
+    if (livro->get_quantidade() == 0)
     {
-        add_lista_espera(*livro);
-    }
-    else if(resposta == "N"){
-        std::cout << "Certo! Pesquise outro título" << std::endl;
-    }
-  }
-  else{
-    livro->update_quantidade(-1);
-    logado->adicionar_livro_no_vetor(*livro);
-  }
+        std::cout << "O Titulo escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
 
+        std::string resposta;
+        getline(std::cin, resposta);
+
+        if(resposta == "Y")
+        {
+            add_lista_espera(livro);
+        }
+        else if(resposta == "N"){
+            std::cout << "Certo! Pesquise outro titulo" << std::endl;
+        }
+    }
+    else
+    {   
+        Livro aux = *livro;
+        _usuarioLogado->adicionar_livro_no_vetor(aux);
+        livro->update_quantidade(-1);
+        std::cout <<"Livro alocado com sucesso!"<< std::endl << std::endl;
+
+    }
 }
-
 void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
    _livros_estoque.push_back(livro);
+   std::cout <<"Livro cadastrado com sucesso!"<< std::endl << std::endl;
 }
 
-void Biblioteca::adiciona_pessoas_no_vetor(Pessoa pessoa)
+void Biblioteca::ver_livros_alugados()
 {
-   _pessoas.push_back(pessoa);
+    _usuarioLogado->visualizar_livros_alugados(); 
 }
+
+
+void Biblioteca::adiciona_usuarios_no_vetor(Usuario* usuario)
+{
+   _usuarios.push_back(usuario);
+   std::cout << "Usuario adicionada com sucesso!" << std::endl << std::endl;
+}
+
+void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
+{
+   _bibliotecarios.push_back(bibliotecario);
+   std::cout << "Pessoa adicionada com sucesso!" << std::endl << std::endl;
+}
+
 void Biblioteca::preencher_livros()
 {
-   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 0 );
+   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 1 );
    Livro dois = Livro("O Duque e eu", "Júlia Queen", "Romance" , 4  );
    Livro tres = Livro( "Diário de um banana: Segurando Vela", "Jeff Kenny ", "InfantoJuvenil", 5 );
    Livro quatro = Livro("Diário de um banana: Vai ou Racha", "Jeff Kenny ", "InfantoJuvenil", 3 );
@@ -210,37 +247,49 @@ void Biblioteca::preencher_livros()
 }
 void Biblioteca::preencher_pessoas()
 {
-    Bibliotecario Ana = Bibliotecario("Ana Sales", "5839ab");
-    _pessoas.push_back(Ana);
-    Bibliotecario Estevao = Bibliotecario("Estêvão Rocha", "9546fg");
-    _pessoas.push_back(Estevao);
-    Bibliotecario Mateus = Bibliotecario("Mateus Pardini", "4567jh");
-    _pessoas.push_back(Mateus);
-    Bibliotecario Rita = Bibliotecario("Rita Milena", "2386ab");
-    _pessoas.push_back(Rita);
-    Bibliotecario Antonella = Bibliotecario("Antonella Santos", "3211rl");
-    _pessoas.push_back(Antonella);
-
-    Usuario Isabel = Usuario("Isabel Cruz", "2378jd");
-    _pessoas.push_back(Isabel);
-    Usuario Emanuel = Usuario("Emanuel Evaristo", "0369xu");
-    _pessoas.push_back(Emanuel);
-    Usuario Maria = Usuario("Maria Silva", "9834vg");
-    _pessoas.push_back(Maria);
-    Usuario Aline = Usuario("Aline Amaral", "6790gç");
-    _pessoas.push_back(Aline);
-    Usuario Gabrielli = Usuario("Gabrielli Valelia", "1706vs");
-    _pessoas.push_back(Gabrielli);
-    Usuario Pedro = Usuario("Pedro Santana", "6002ps");
-    _pessoas.push_back(Pedro);
+    Bibliotecario* Ana = new Bibliotecario("Ana Sales", "5839ab");
+    _bibliotecarios.push_back(Ana);
+    Bibliotecario* Estevao = new Bibliotecario("Estêvão Rocha", "9546fg");
+    _bibliotecarios.push_back(Estevao);
+    
+    Usuario* Mateus = new Usuario("Mateus Pardini", "4567jh");
+     _usuarios.push_back(Mateus);
+    Usuario* Rita = new Usuario("Rita Milena", "2386ab");
+     _usuarios.push_back(Rita);
+    Usuario* Antonella = new Usuario("Antonella Santos", "3211rl");
+     _usuarios.push_back(Antonella);
+    Usuario* Isabel = new Usuario("Isabel Cruz", "2378jd");
+     _usuarios.push_back(Isabel);
+    Usuario* Emanuel = new Usuario("Emanuel Evaristo", "0369xu");
+    _usuarios.push_back(Emanuel);
+    Usuario* Maria = new Usuario("Maria Silva", "9834vg");
+    _usuarios.push_back(Maria);
+    Usuario* Aline = new Usuario("Aline Amaral", "6790gç");
+    _usuarios.push_back(Aline);
+    Usuario* Gabrielli = new Usuario("Gabrielli Valelia", "1706vs");
+    _usuarios.push_back(Gabrielli);
+    Usuario* Pedro = new Usuario("Pedro Santana", "6002ps");
+    _usuarios.push_back(Pedro);
 
 }
 
-bool Biblioteca::pessoa_existe(std::string nome)
+bool Biblioteca::bibliotecario_existe(std::string nome)
 {
-    for( Pessoa pessoa : _pessoas)
+    for( Bibliotecario* bibliotecario : _bibliotecarios)
     {
-        if(pessoa.get_nome() == nome)
+        if(bibliotecario->get_nome() == nome)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Biblioteca::usuario_existe(std::string nome)
+{
+    for( Usuario* usuario : _usuarios)
+    {
+        if(usuario->get_nome() == nome)
         {
             return true;
         }
@@ -253,20 +302,20 @@ void Biblioteca::ver_listas_espera()
 
     for(auto& par : _listas_espera)
     {
-        std::cout << "Livro: " << par.first.get_titulo() << std::endl;
+        std::cout << "Livro: " << par.first->get_titulo() << std::endl;
 
         for(auto& pessoa_espera : par.second)
         {
-            std::cout << "-" << pessoa_espera.get_nome();
+            std::cout << "-" << pessoa_espera->get_nome();
         }
         std::cout << std::endl;
     }
 }
 
 
-bool Biblioteca::login()
+bool Biblioteca::login(bool* isAdm)
 {
-  std::string _nome, _senha;
+  std::string _nome, _senha, _tipo;
 
     std::cout<< "Digite seu nome" << std::endl;
     getline(cin ,_nome);
@@ -274,48 +323,95 @@ bool Biblioteca::login()
     std::cout<< "Digite sua senha" << std::endl;
     getline(cin ,_senha);
 
-    if(pessoa_existe(_nome))
+    std::cout<< "Você é Usuário (U) ou Bibliotecario (B)?" << std::endl;
+    getline(cin ,_tipo);
+
+    if(_tipo == "B")
     {
-        std::string senhaReal;
+         
+         if(bibliotecario_existe(_nome))
+         {
+                std::string senhaReal;
 
-        Pessoa* logando = get_pessoa_especifica(_nome);
+                Bibliotecario* logando = get_bibliotecario_especifico(_nome);
+                Bibliotecario aux = *logando;
 
-        if(logando->get_senha() == _senha)
-        {
-            std::cout<< "Login bem-sucedido." << std::endl;
-            this->_pessoaLogada = logando;
-            std::cout<< "Bem-vindo, "<<(this->_pessoaLogada)->get_nome() << std::endl;
-            return true;
+            if(aux.get_senha() == _senha)
+            {
+
+                std::cout<< "Login bem-sucedido." << std::endl;
+                this->_bibliotecarioLogado = logando;
+                std::cout<< "Bem-vindo (a), "<<aux.get_nome() << std::endl << std::endl;
+                *isAdm = true;
+                return true;
+            }
+            else
+            {
+                std::cout<< "Senha incorreta. Tente novamente" << std::endl << std::endl;
+                return false;
+            }
         }
         else
         {
-            std::cout<< "Senha incorreta. Tente novamente" << std::endl;
+            std::cout<< "nome não encontrado" << std::endl << std::endl;
             return false;
         }
     }
-    else
+    else if (_tipo == "U")
     {
-        std::cout<< "nome não encontrado" << std::endl;
-        return false;
+         if(usuario_existe(_nome))
+         {
+                std::string senhaReal;
+
+                Usuario* logando = get_usuario_especifico(_nome);
+                Usuario aux = *logando;
+
+            if(aux.get_senha() == _senha)
+            {
+
+                std::cout<< "Login bem-sucedido." << std::endl;
+                this->_usuarioLogado = logando;
+                std::cout<< "Bem-vindo (a), "<<aux.get_nome() << std::endl << std::endl;
+                *isAdm = false;
+                return true;
+            }
+            else
+            {
+                std::cout<< "Senha incorreta. Tente novamente" << std::endl << std::endl;
+                return false;
+            }
+        }
+        else
+        {
+            std::cout<< "nome não encontrado" << std::endl << std::endl;
+            return false;
+        }
+    }else{
+        std::cout<< "Tipo Invalido" << std::endl << std::endl;
+            return false;
     }
+    
+
+    
 }
 
 bool Biblioteca::logout(){
-   
+
    std::cout << "Deseja realmente fazer logout? (Y/N)" << std::endl;
 
    std::string resposta;
-   
+
    std::cin >> resposta;
 
    if(resposta == "Y"){
-       
-      _pessoaLogada = nullptr;
-      std::cout << "Logout realizado com sucesso!" << std::endl;
+
+      _usuarioLogado = nullptr;
+      _bibliotecarioLogado = nullptr;
+      std::cout << "Logout realizado com sucesso!" << std::endl << std::endl;
       return true;
    }
    else if(resposta == "N"){
-      std::cout << "Logout cancelado!" << std::endl;
+      std::cout << "Logout cancelado!" << std::endl << std::endl;
       return false;
    }
    else{
@@ -325,14 +421,14 @@ bool Biblioteca::logout(){
 
 }
 
-void Biblioteca::add_lista_espera(Livro livro)
+void Biblioteca::add_lista_espera(Livro* livro)
 {
     bool pessoaNaLista = false;
     bool livroNaLista = false;
 
     for(auto& par : _listas_espera)
     {
-        if(par.first.get_titulo() == livro.get_titulo())
+        if(par.first->get_titulo() == livro->get_titulo())
         {
             livroNaLista = true;
 
@@ -340,7 +436,7 @@ void Biblioteca::add_lista_espera(Livro livro)
             {
                 for(auto& pessoa_espera : par.second)
                 {
-                    if(pessoa_espera.get_nome() == _pessoaLogada->get_nome())
+                    if(pessoa_espera->get_nome() == _usuarioLogado->get_nome())
                     {
                         pessoaNaLista = true;
                         std::cout << "Voce ja esta na lista de espera para este livro, tenha paciencia" << std::endl;
@@ -350,23 +446,21 @@ void Biblioteca::add_lista_espera(Livro livro)
 
                 if(!pessoaNaLista)
                 {
-                    par.second.push_back(*_pessoaLogada);
-                    std::cout << "Pronto! Assim que esse exemplar estiver disponível ele entrará ele será alocado para você!" << std::endl;
+                    par.second.push_back(_usuarioLogado);
+                    std::cout << "Pronto! Assim que esse exemplar estiver disponivel elesera alocado para voce!" << std::endl;
                 }
             }
         }
     }
-
     if(!livroNaLista)
     {
         std::pair<int, char> as;
-        std::vector<Pessoa>pessoas;
-        pessoas.push_back(*_pessoaLogada);
+        std::vector<Usuario*>pessoas;
+        pessoas.push_back(_usuarioLogado);
 
         _listas_espera.push_back(make_pair(livro, pessoas));
-        std::cout << "Pronto! Assim que esse exemplar estiver disponível ele entrará ele será alocado para você!" << std::endl;
+        std::cout << "Pronto! Assim que esse exemplar estiver disponivel ele sera alocado para voce!" << std::endl;
     }
-
 }
 
 
@@ -384,9 +478,8 @@ void Biblioteca::limpar_lista_de_espera(){
         else
         {
             it++;
-        }  
+        }
     }
-
 }
 
 void Biblioteca::update_lista_de_espera(){
@@ -394,17 +487,17 @@ void Biblioteca::update_lista_de_espera(){
 
     for(auto& par : _listas_espera)
     {
-        if(par.first.get_quantidade() > 0 )
+        std::cout<< par.first->get_quantidade();
+
+        if(par.first->get_quantidade() > 0 )
         {
-           par.first.update_quantidade(-1);
-           Usuario* aux = (Usuario*)&par.second[0];
-           aux->adicionar_livro_no_vetor(par.first);
-           //std::cout<<"Livro " << par.first.get_titulo() << " alugado para " << aux->get_nome() << std::endl; 
+           par.first->update_quantidade(-1);
+           Usuario* aux = par.second[0];
+           aux->adicionar_livro_no_vetor(*par.first);
+           //std::cout<<"Livro " << par.first->get_titulo() << " alugado para " << aux->get_nome() << std::endl;
            par.second.erase(par.second.begin());
-           
         }
     }
-
     limpar_lista_de_espera();
 }
 
@@ -412,6 +505,27 @@ void Biblioteca::imprime_livros(){
 
     for(auto& livro : _livros_estoque)
     {
-        std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << std::endl;
+        std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << ". Genero " << livro.get_genero() << std::endl;
     }
+    std::cout<<std::endl;
 }
+
+void Biblioteca::imprime_pessoas(){
+
+    for(auto& bibliotecario : _bibliotecarios)
+    {
+        std::cout<< bibliotecario->get_nome() << ",  " << "Bibliotecario(a)" << std::endl;
+    }
+    for(auto& usuario : _usuarios)
+    {
+        std::cout<< usuario->get_nome() << ",  " << "Usuario(a)" << std::endl;
+    }
+    std::cout<<std::endl;
+}
+
+
+/* //retorna true se bibliotecario
+bool Biblioteca::eh_super_user()
+{
+    return _pessoaLogada->get_tipo();
+} */

@@ -16,41 +16,49 @@ class Biblioteca
 {
     private:
         std::vector<Livro>_livros_estoque;
-        std::vector<Pessoa>_pessoas;
-        std::vector<std::pair<Livro, std::vector<Pessoa>>> _listas_espera;
-        Pessoa* _pessoaLogada;
+        std::vector<Bibliotecario*>_bibliotecarios;
+        std::vector<Usuario*> _usuarios;
+        std::vector<std::pair<Livro*, std::vector<Usuario*>>> _listas_espera;
+        Usuario* _usuarioLogado;
+        Bibliotecario* _bibliotecarioLogado;
 
     public:
 
         Biblioteca();
-        void get_livros_nome(std::string nome);
+        bool get_livros_nome(std::string nome);
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
-        
+
 
         void preencher_livros();
         void preencher_pessoas();
 
         void devolver_livro_alugado(std::string titulo);
         void adicionar_livro_alugado(std::string titulo);
+        void ver_livros_alugados();
 
         void adiciona_livros_no_estoque(Livro livro);
-        void adiciona_pessoas_no_vetor(Pessoa pessoa);
+        void adiciona_usuarios_no_vetor(Usuario* usuario);
+        void adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario);
 
-        bool pessoa_existe(std::string nome);
+        bool usuario_existe(std::string nome);
+        bool bibliotecario_existe(std::string nome);
 
-        bool login();
+        bool login(bool* isAdm);
         bool logout();
 
-        void add_lista_espera(Livro livro);
+        void add_lista_espera(Livro* livro);
         void ver_listas_espera();
         void update_lista_de_espera();
         void limpar_lista_de_espera();
 
+
         void imprime_livros();
         void imprime_pessoas();
+        bool eh_super_user();
 
-        Pessoa* get_pessoa_especifica(std::string nome);
+        Usuario* get_usuario_especifico(std::string nome);
+        Bibliotecario* get_bibliotecario_especifico(std::string nome);
         Livro* get_livro_especifico(std::string titulo);
 
 };
