@@ -18,7 +18,7 @@ class Biblioteca
         std::vector<Livro>_livros_estoque;
         std::vector<Bibliotecario*>_bibliotecarios;
         std::vector<Usuario*> _usuarios;
-        std::vector<std::pair<Livro, std::vector<Usuario>>> _listas_espera;
+        std::vector<std::pair<Livro*, std::vector<Usuario*>>> _listas_espera;
         Usuario* _usuarioLogado;
         Bibliotecario* _bibliotecarioLogado;
 
@@ -47,7 +47,7 @@ class Biblioteca
         bool login(bool* isAdm);
         bool logout();
 
-        void add_lista_espera(Livro livro);
+        void add_lista_espera(Livro* livro);
         void ver_listas_espera();
         void update_lista_de_espera();
         void limpar_lista_de_espera();
