@@ -6,11 +6,12 @@ void imprimir_comandos(bool eh_admin)
 {
 if(eh_admin)
         {
-            std::cout << "  VER - listar Pessoas cadastradas no sistema;" << std::endl;
-            std::cout << "  ADD PESSOA - Adiciona uma pessoa no sistema;" << std::endl;
-            std::cout << "  ADD LIVRO - Adiciona um livro no sistema;" << std::endl;
-            std::cout << "  LOGOUT - Encerra a sessão;" << std::endl;/////////////////////////////////////////////////////
-            std::cout << "  HELP - Lista os comandos disponiveis;" << std::endl;
+            std::cout << "  VER - listar Pessoas cadastradas no sistema;" << std::endl; /////////////////////////////////////////////////
+            std::cout << "  ADD PESSOA - Adiciona uma pessoa no sistema;" << std::endl; /////////////////////////////////////////////////
+            std::cout << "  ADD LIVRO - Adiciona um livro no sistema;" << std::endl; ////////////////////////////////////////////////////
+            std::cout << "  LOGOUT - Encerra a sessão;" << std::endl;////////////////////////////////////////////////////////////////////
+            std::cout << "  HELP - Lista os comandos disponiveis;" << std::endl; ////////////////////////////////////////////////////////
+            std::cout << "  VER ACERVO - Lista todos os livros no banco de dados" << std::endl;///////////////////////////////////////////
             std::cout << std::endl << "->";
         }
         else
@@ -23,7 +24,7 @@ if(eh_admin)
             std::cout << "  DEVOLVER LIVRO - Retorna um livro à biblioteca" << std::endl;/////////////////////////////////////////////////
             std::cout << "  ALUGAR LIVRO - Aluga um livro da biblioteca" << std::endl; ///////////////////////////////////////////////////
             std::cout << "  LOGOUT - Encerra a sessão" << std::endl;                    //////////////////////////////////////////////////
-            std::cout << "  HELP - Lista os comandos disponiveis;" << std::endl<< std::endl << "->";
+            std::cout << "  HELP - Lista os comandos disponiveis;" << std::endl<< std::endl << "->"; /////////////////////////////////////
         }
 }
 
@@ -33,6 +34,8 @@ void aguardar()
     std::cin >>a; // mudar
 
 }
+
+
 int main()
 {
 
@@ -42,20 +45,14 @@ int main()
 
     while(true)
     {
-        system("cls");
         while(!biblioteca.login())
-        {
-            system("cls");
-            std::cout << "Nome nao encontrado. Tente novamente." << std::endl;
-            //codigo vai ficar enrolando aqui enquanto o login não for realizado
-        }
+        {}
 
         bool deslogado = false;
         bool primeiroLoop = true;
         while(!deslogado)
         {
-            system("cls");
-            std::cout << "Escolha uma acao: " << std::endl;
+            std::cout << "Escolha uma acao: ( Digite HELP para listar todas as disponíveis) " << std::endl;
             std::cout << std::endl;
 
             if(primeiroLoop)
@@ -67,51 +64,92 @@ int main()
 
             std::string comando;
             getline(std::cin, comando);
-            bool croc;
 
-            //comandos bibliotecario
-            {
+            
             if(comando == "VER")
             {
                 if(biblioteca.eh_super_user())
                 {
-                    //fazer
+                    biblioteca.imprime_pessoas();
                 }
                 else
                 {
-                    std::cout << "Voce naum tem permissaum para utilizar este comando" << std::endl;
+                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
                 }
             }
 
-            if(comando == "ADD PESSOA")
+            else if(comando == "ADD PESSOA")
             {
                 if(biblioteca.eh_super_user())
                 {
-                    //fazer
+                    std::string nome, senha, tipo;
+
+                    std::cout<< "Deseja cadastrar um usuário (U) ou um bibliotecário (B)?" << std::endl;
+                    getline(std::cin, tipo);
+
+                    if (tipo == "U")
+                    {
+                        std::cout << "Digite o nome do usuário que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, nome);
+                        std::cout << "Digite a senha do usuário que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, senha);
+                        
+                        Usuario aux = Usuario(nome, senha);
+                        biblioteca.adiciona_pessoas_no_vetor(aux);
+                    }
+                    else if(tipo == "B"){
+                        std::cout << "Digite o nome do bibliotecário que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, nome);
+                        std::cout << "Digite a senha do bibliotecário que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, senha);
+                        
+                        Bibliotecario aux = Bibliotecario(nome, senha);
+                        biblioteca.adiciona_pessoas_no_vetor(aux);
+                    }
+                    else{
+                       std::cout << "Comando inválido." << std::endl << std::endl; 
+                    }
+                    
                 }
                 else
                 {
-                    std::cout << "Voce naum tem permissaum para utilizar este comando" << std::endl;
+                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
                 }
             }
 
-            if(comando == "ADD LIVRO")
+            else if(comando == "ADD LIVRO")
             {
                 if(biblioteca.eh_super_user())
                 {
-                    //fazer
+                    std::string titulo, autor, genero;
+                    int qtd;
+
+                    std::cout << "Digite o titulo do livro que deseja cadastrar:"  << std::endl;
+                    getline(std::cin, titulo);
+                    std::cout << "Digite o nome do autor do livro que deseja cadastrar:"  << std::endl;
+                    getline(std::cin, autor);
+                    std::cout << "Digite a quantidade de exemplares do livro que deseja cadastrar:"  << std::endl;
+                    std::cin >> qtd;
+                    std::cout << "Digite o genero do livro que deseja cadastrar:"  << std::endl;
+                    getline(std::cin, genero);
+
+                    Livro aux = Livro(titulo, autor, genero, qtd);
+                    biblioteca.adiciona_livros_no_estoque(aux);
+
                 }
                 else
                 {
-                    std::cout << "Voce naum tem permissaum para utilizar este comando" << std::endl;
+                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
                 }
             }
-            }
-
-            ////comandos usuario
+            
+            else if (comando == "HELP")
             {
-                if(comando == "PESQUISAR LIVRO TITULO")
-                {
+                imprimir_comandos(biblioteca.eh_super_user());
+            }
+            
+            else if(comando == "PESQUISAR LIVRO TITULO")
+            {
                     if(!biblioteca.eh_super_user())
                     {
                         std::cout << "Digite o titulo do livro:" <<std::endl;
@@ -122,12 +160,12 @@ int main()
                             std::cout<< "Deseja alugar este exemplar? (Y/N)"<< std::endl;
 
                             std::string resposta;
-                            std::cin >> resposta;
+                            getline(std::cin, resposta);
 
                             if(resposta == "Y")
                             {
                                 biblioteca.adicionar_livro_alugado(nome);
-                                aguardar();
+
                             }
 
                         }
@@ -136,10 +174,10 @@ int main()
                     {
                         std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
                     }
-                }
+            }
 
-                if(comando == "PESQUISAR LIVRO AUTOR")
-                {
+            else if(comando == "PESQUISAR LIVRO AUTOR")
+            {
                 if(!biblioteca.eh_super_user())
                 {
                     std::cout << "Digite o nome do autor:" <<std::endl;
@@ -147,8 +185,6 @@ int main()
                     getline(std::cin, nome);
                     biblioteca.get_livros_autor(nome);
 
-                    std::string a;
-                    std::cin >>a; // mudar
                 }
                 else
                 {
@@ -156,11 +192,11 @@ int main()
                 }
             }
 
-                if(comando == "PESQUISAR LIVRO GENERO")
-                {
+            else if(comando == "PESQUISAR LIVRO GENERO")
+            {
                     if(!biblioteca.eh_super_user())
                     {
-                        std::cout << "Digite o genero textual:" <<std::endl;
+                        std::cout << "Digite o genero desejado:" <<std::endl;
                         std::string nome;
                         getline(std::cin, nome);
                         biblioteca.get_livros_genero(nome);
@@ -169,56 +205,51 @@ int main()
                     {
                         std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
                     }
-                }
+            }
 
-                if(comando == "VER ACERVO")
-                {
-                    if(!biblioteca.eh_super_user())
-                    {
-                        biblioteca.imprime_livros();
-                        aguardar();
-                    }
-                    else
-                    {
-                        std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
-                        aguardar();
-                    }
-                }
+            else if(comando == "VER ACERVO")
+            {
+                    biblioteca.imprime_livros();
+            }
 
-                if(comando == "LOGOUT")
-                {
-                    deslogado = biblioteca.logout();
-                    getchar();
-                }
+            else if(comando == "LOGOUT")
+            {
+                deslogado = biblioteca.logout();
+                getchar();
+            }
 
-                if(comando == "ALUGAR LIVRO")
-                {
+            else if(comando == "ALUGAR LIVRO")
+            {
                     std::cout << "Digite o titulo do livro:" <<std::endl;
                     std::string nome;
                     getline(std::cin, nome);
                     biblioteca.adicionar_livro_alugado(nome);
-                    aguardar();
-                }
+   
+            }
 
-                if(comando == "DEVOLVER LIVRO")
-                {
+            else if(comando == "DEVOLVER LIVRO")
+            {
 
                     std::cout << "Digite o titulo do livro:" <<std::endl;
                     std::string nome;
                     getline(std::cin, nome);
                     std::cout << nome;
                     biblioteca.devolver_livro_alugado(nome);
-                    aguardar();
-                }
 
-                if(comando == "VER LOCACOES")
-                {
+            }
+
+            else if(comando == "VER LOCACOES")
+            {
                     biblioteca.ver_livros_alugados();
-                    aguardar();
-                }
+
+            }
+            
+            else
+            {
+                std::cout << "Comando inválido!!" <<std::endl;
             }
         }
-    }
+    }    
     return 0;
 }
 
