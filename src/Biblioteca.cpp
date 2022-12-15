@@ -27,7 +27,7 @@ void Biblioteca::get_livros_autor(std::string autor)
    }
 }
 
-
+//posso alterar
 void Biblioteca::get_livros_genero(std::string genero)
 {
    int qtd = 0;
@@ -51,7 +51,7 @@ void Biblioteca::get_livros_genero(std::string genero)
    }
 }
 
-
+//posso alterar
 bool Biblioteca::get_livros_nome(std::string nome)
 {
    int qtd = 0;
@@ -78,10 +78,9 @@ bool Biblioteca::get_livros_nome(std::string nome)
 }
 
 
-
+//posso alterar
 Usuario* Biblioteca::get_usuario_especifico(std::string nome)
 {
-
     for(auto& usuario : _usuarios)
     {
         if(usuario->get_nome() == nome)
@@ -316,21 +315,27 @@ void Biblioteca::ver_listas_espera()
 bool Biblioteca::login(bool* isAdm)
 {
   std::string _nome, _senha, _tipo;
+    
+    //verificar se é um bibliotecario mesmo
+    while(_nome.size() == 0) {
+        std::cout<< "Digite seu nome" << std::endl;
+        getline(cin ,_nome);
+    }
 
-    std::cout<< "Digite seu nome" << std::endl;
-    getline(cin ,_nome);
+    while (_senha.size() == 0) {
+        std::cout<< "Digite sua senha" << std::endl;
+        getline(cin ,_senha);
+    }
 
-    std::cout<< "Digite sua senha" << std::endl;
-    getline(cin ,_senha);
-
-    std::cout<< "Você é Usuário (U) ou Bibliotecario (B)?" << std::endl;
-    getline(cin ,_tipo);
-
+    while (_tipo.size() == 0) {
+        std::cout<< "Você é Usuário (U) ou Bibliotecario (B)?" << std::endl;
+        getline(cin ,_tipo);
+    }
+    
     if(_tipo == "B")
-    {
-         
-         if(bibliotecario_existe(_nome))
-         {
+    {   
+        if(bibliotecario_existe(_nome))
+        {
                 std::string senhaReal;
 
                 Bibliotecario* logando = get_bibliotecario_especifico(_nome);
@@ -345,15 +350,19 @@ bool Biblioteca::login(bool* isAdm)
                 *isAdm = true;
                 return true;
             }
-            else
+            else 
             {
                 std::cout<< "Senha incorreta. Tente novamente" << std::endl << std::endl;
                 return false;
             }
         }
+        else if (usuario_existe(_nome)) {
+                std::cout << "Tente novamente como usuário." << std::endl << std::endl; 
+                return false;
+        }
         else
         {
-            std::cout<< "nome não encontrado" << std::endl << std::endl;
+            std::cout<< "Nome não encontrado. Tente novamente." << std::endl << std::endl;
             return false;
         }
     }
@@ -381,18 +390,19 @@ bool Biblioteca::login(bool* isAdm)
                 return false;
             }
         }
-        else
-        {
-            std::cout<< "nome não encontrado" << std::endl << std::endl;
+        else if (bibliotecario_existe(_nome)) {
+            std::cout << "Tente novamente como bibliotecário." << std::endl << std::endl; 
             return false;
         }
-    }else{
-        std::cout<< "Tipo Invalido" << std::endl << std::endl;
+        else
+        {
+            std::cout<< "Nome não encontrado. Tente novamente." << std::endl << std::endl;
+            return false;
+        }
+    } else {
+        std::cout<< "Tipo Invalido. Tente novamente." << std::endl << std::endl;
             return false;
     }
-    
-
-    
 }
 
 bool Biblioteca::logout(){
@@ -521,8 +531,8 @@ void Biblioteca::imprime_pessoas(){
 }
 
 
-/* //retorna true se bibliotecario
-bool Biblioteca::eh_super_user()
-{
-    return _pessoaLogada->get_tipo();
-} */
+//retorna true se bibliotecario
+// bool Biblioteca::eh_super_user()
+// {
+//     return _pessoaLogada->get_tipo();
+// } 
