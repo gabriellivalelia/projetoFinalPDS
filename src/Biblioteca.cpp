@@ -103,7 +103,7 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
     {
         if(livro.get_titulo() == titulo)
         {
-            std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
+            //std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
             return &livro;
         }
     }
@@ -167,10 +167,11 @@ void Biblioteca::ver_livros_alugados()
 {
     Usuario* user = (Usuario*)_pessoaLogada;
 
-    std::cout << user;
-
+    //std::cout << user;
     
     user->visualizar_livros_alugados(); 
+  
+
 }
 
 
@@ -234,8 +235,7 @@ void Biblioteca::preencher_pessoas()
     Bibliotecario Estevao = Bibliotecario("Estêvão Rocha", "9546fg");
     _pessoas.push_back(Estevao);
     
-    Usuario Mateus = Usuario("Mateus Pardini", "4567jh");
-    _pessoas.push_back(Mateus);
+    
     Usuario Rita = Usuario("Rita Milena", "2386ab");
     _pessoas.push_back(Rita);
     Usuario Antonella = Usuario("Antonella Santos", "3211rl");
@@ -306,6 +306,7 @@ bool Biblioteca::login()
             std::cout<< "Login bem-sucedido." << std::endl;
             this->_pessoaLogada = logando;
             std::cout<< "Bem-vindo (a), "<<aux.get_nome() << std::endl << std::endl;
+            std::cout << logando << std::endl;
             return true;
         }
         else

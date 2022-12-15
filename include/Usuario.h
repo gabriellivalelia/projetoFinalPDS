@@ -9,7 +9,7 @@
 
 class Usuario : public Pessoa {
     private:
-        std::vector<Livro> _livros_alugados;
+        std::vector<Livro> _livros;
     public:
         Usuario(
             std::string nome,

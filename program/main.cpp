@@ -28,21 +28,39 @@ if(eh_admin)
         }
 }
 
-void aguardar()
-{
-    std::string a;
-    std::cin >>a; // mudar
-
-}
-
 
 int main()
 {
 
     Biblioteca biblioteca = Biblioteca();
     biblioteca.preencher_livros();
-    biblioteca.preencher_pessoas();
+    //biblioteca.preencher_pessoas();
 
+    Bibliotecario Ana = Bibliotecario("Ana Sales", "5839ab");
+    biblioteca.adiciona_pessoas_no_vetor(Ana);
+    Bibliotecario Estevao = Bibliotecario("Estêvão Rocha", "9546fg");
+    biblioteca.adiciona_pessoas_no_vetor(Estevao);
+    Usuario Rita = Usuario("Rita Milena", "2386ab");
+    biblioteca.adiciona_pessoas_no_vetor(Rita);
+    Usuario Antonella = Usuario("Antonella Santos", "3211rl");
+    biblioteca.adiciona_pessoas_no_vetor(Antonella);
+    Usuario Isabel = Usuario("Isabel Cruz", "2378jd");
+    biblioteca.adiciona_pessoas_no_vetor(Isabel);
+    Usuario Emanuel = Usuario("Emanuel Evaristo", "0369xu");
+    biblioteca.adiciona_pessoas_no_vetor(Emanuel);
+    Usuario Maria = Usuario("Maria Silva", "9834vg");
+    biblioteca.adiciona_pessoas_no_vetor(Maria);
+    Usuario Aline = Usuario("Aline Amaral", "6790gç");
+    biblioteca.adiciona_pessoas_no_vetor(Aline);
+    Usuario Gabrielli = Usuario("Gabrielli Valelia", "1706vs");
+    biblioteca.adiciona_pessoas_no_vetor(Gabrielli);
+    Usuario Pedro = Usuario("Pedro Santana", "6002ps");
+    biblioteca.adiciona_pessoas_no_vetor(Pedro);
+    Usuario Mateus = Usuario("Mateus Pardini", "4567jh");
+    biblioteca.adiciona_pessoas_no_vetor(Mateus);
+
+    std::cout<< &Mateus<< std::endl;
+    
     while(true)
     {
         while(!biblioteca.login())
@@ -240,7 +258,7 @@ int main()
 
             else if(comando == "VER LOCACOES")
             {
-                    biblioteca.ver_livros_alugados();
+                biblioteca.ver_livros_alugados();
 
             }
             
