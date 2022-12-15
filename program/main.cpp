@@ -28,12 +28,6 @@ if(eh_admin)
         }
 }
 
-void aguardar()
-{
-    std::string a;
-    std::cin >>a; // mudar
-
-}
 
 
 int main()
@@ -43,9 +37,12 @@ int main()
     biblioteca.preencher_livros();
     biblioteca.preencher_pessoas();
 
+    bool isAdm;
+
+
     while(true)
     {
-        while(!biblioteca.login())
+        while(!biblioteca.login(&isAdm))
         {}
 
         bool deslogado = false;
@@ -57,7 +54,7 @@ int main()
 
             if(primeiroLoop)
             {
-                imprimir_comandos(biblioteca.eh_super_user());
+                imprimir_comandos(isAdm);
                 primeiroLoop = false;
             }
 
@@ -68,7 +65,7 @@ int main()
             
             if(comando == "VER")
             {
-                if(biblioteca.eh_super_user())
+                if(isAdm)
                 {
                     biblioteca.imprime_pessoas();
                 }
@@ -80,7 +77,7 @@ int main()
 
             else if(comando == "ADD PESSOA")
             {
-                if(biblioteca.eh_super_user())
+                if(isAdm)
                 {
                     std::string nome, senha, tipo;
 
@@ -95,7 +92,7 @@ int main()
                         getline(std::cin, senha);
                         
                         Usuario aux = Usuario(nome, senha);
-                        biblioteca.adiciona_pessoas_no_vetor(aux);
+                        biblioteca.adiciona_usuarios_no_vetor(&aux);
                     }
                     else if(tipo == "B"){
                         std::cout << "Digite o nome do bibliotecário que deseja cadastrar:"  << std::endl;
@@ -104,7 +101,7 @@ int main()
                         getline(std::cin, senha);
                         
                         Bibliotecario aux = Bibliotecario(nome, senha);
-                        biblioteca.adiciona_pessoas_no_vetor(aux);
+                        biblioteca.adiciona_bibliotecarios_no_vetor(&aux);
                     }
                     else{
                        std::cout << "Comando inválido." << std::endl << std::endl; 
@@ -119,7 +116,7 @@ int main()
 
             else if(comando == "ADD LIVRO")
             {
-                if(biblioteca.eh_super_user())
+                if(isAdm)
                 {
                     std::string titulo, autor, genero;
                     int qtd;
@@ -145,12 +142,12 @@ int main()
             
             else if (comando == "HELP")
             {
-                imprimir_comandos(biblioteca.eh_super_user());
+                imprimir_comandos(isAdm);
             }
             
             else if(comando == "PESQUISAR LIVRO TITULO")
             {
-                    if(!biblioteca.eh_super_user())
+                    if(!isAdm)
                     {
                         std::cout << "Digite o titulo do livro:" <<std::endl;
                         std::string nome;
@@ -178,7 +175,7 @@ int main()
 
             else if(comando == "PESQUISAR LIVRO AUTOR")
             {
-                if(!biblioteca.eh_super_user())
+                if(!isAdm)
                 {
                     std::cout << "Digite o nome do autor:" <<std::endl;
                     std::string nome;
@@ -194,7 +191,7 @@ int main()
 
             else if(comando == "PESQUISAR LIVRO GENERO")
             {
-                    if(!biblioteca.eh_super_user())
+                    if(!isAdm)
                     {
                         std::cout << "Digite o genero desejado:" <<std::endl;
                         std::string nome;
