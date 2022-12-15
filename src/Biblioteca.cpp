@@ -121,7 +121,7 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
     {
         if(livro.get_titulo() == titulo)
         {
-            std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
+            //std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
             return &livro;
         }
     }
@@ -154,11 +154,11 @@ void Biblioteca::adicionar_livro_alugado(std::string titulo)
         std::cout << "O Titulo escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
 
         std::string resposta;
-        std::cin >> resposta; ;
+        getline(std::cin, resposta);
 
         if(resposta == "Y")
         {
-            add_lista_espera(*livro);
+            add_lista_espera(livro);
         }
         else if(resposta == "N"){
             std::cout << "Certo! Pesquise outro titulo" << std::endl;
@@ -302,11 +302,11 @@ void Biblioteca::ver_listas_espera()
 
     for(auto& par : _listas_espera)
     {
-        std::cout << "Livro: " << par.first.get_titulo() << std::endl;
+        std::cout << "Livro: " << par.first->get_titulo() << std::endl;
 
         for(auto& pessoa_espera : par.second)
         {
-            std::cout << "-" << pessoa_espera.get_nome();
+            std::cout << "-" << pessoa_espera->get_nome();
         }
         std::cout << std::endl;
     }
@@ -421,14 +421,14 @@ bool Biblioteca::logout(){
 
 }
 
-void Biblioteca::add_lista_espera(Livro livro)
+void Biblioteca::add_lista_espera(Livro* livro)
 {
     bool pessoaNaLista = false;
     bool livroNaLista = false;
 
     for(auto& par : _listas_espera)
     {
-        if(par.first.get_titulo() == livro.get_titulo())
+        if(par.first->get_titulo() == livro->get_titulo())
         {
             livroNaLista = true;
 
@@ -436,7 +436,7 @@ void Biblioteca::add_lista_espera(Livro livro)
             {
                 for(auto& pessoa_espera : par.second)
                 {
-                    if(pessoa_espera.get_nome() == _usuarioLogado->get_nome())
+                    if(pessoa_espera->get_nome() == _usuarioLogado->get_nome())
                     {
                         pessoaNaLista = true;
                         std::cout << "Voce ja esta na lista de espera para este livro, tenha paciencia" << std::endl;
@@ -446,7 +446,7 @@ void Biblioteca::add_lista_espera(Livro livro)
 
                 if(!pessoaNaLista)
                 {
-                    par.second.push_back(*_usuarioLogado);
+                    par.second.push_back(_usuarioLogado);
                     std::cout << "Pronto! Assim que esse exemplar estiver disponivel elesera alocado para voce!" << std::endl;
                 }
             }
@@ -455,8 +455,8 @@ void Biblioteca::add_lista_espera(Livro livro)
     if(!livroNaLista)
     {
         std::pair<int, char> as;
-        std::vector<Usuario>pessoas;
-        pessoas.push_back(*_usuarioLogado);
+        std::vector<Usuario*>pessoas;
+        pessoas.push_back(_usuarioLogado);
 
         _listas_espera.push_back(make_pair(livro, pessoas));
         std::cout << "Pronto! Assim que esse exemplar estiver disponivel ele sera alocado para voce!" << std::endl;
@@ -484,14 +484,17 @@ void Biblioteca::limpar_lista_de_espera(){
 
 void Biblioteca::update_lista_de_espera(){
 
+
     for(auto& par : _listas_espera)
     {
-        if(par.first.get_quantidade() > 0 )
+        std::cout<< par.first->get_quantidade();
+
+        if(par.first->get_quantidade() > 0 )
         {
-           par.first.update_quantidade(-1);
-           Usuario aux = par.second[0];
-           aux.adicionar_livro_no_vetor(par.first);
-           std::cout<<"Livro " << par.first.get_titulo() << " alugado para " << aux.get_nome() << std::endl;
+           par.first->update_quantidade(-1);
+           Usuario* aux = par.second[0];
+           aux->adicionar_livro_no_vetor(*par.first);
+           //std::cout<<"Livro " << par.first->get_titulo() << " alugado para " << aux->get_nome() << std::endl;
            par.second.erase(par.second.begin());
         }
     }
