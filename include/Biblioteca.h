@@ -23,16 +23,17 @@ class Biblioteca
     public:
 
         Biblioteca();
-        void get_livros_nome(std::string nome);
+        bool get_livros_nome(std::string nome);
         void get_livros_autor(std::string autor);
         void get_livros_genero(std::string genero);
-        
+
 
         void preencher_livros();
         void preencher_pessoas();
 
         void devolver_livro_alugado(std::string titulo);
         void adicionar_livro_alugado(std::string titulo);
+        void ver_livros_alugados();
 
         void adiciona_livros_no_estoque(Livro livro);
         void adiciona_pessoas_no_vetor(Pessoa pessoa);
@@ -47,8 +48,10 @@ class Biblioteca
         void update_lista_de_espera();
         void limpar_lista_de_espera();
 
+
         void imprime_livros();
         void imprime_pessoas();
+        bool eh_super_user();
 
         Pessoa* get_pessoa_especifica(std::string nome);
         Livro* get_livro_especifico(std::string titulo);
