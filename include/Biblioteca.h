@@ -11,6 +11,56 @@
 #include "Usuario.h"
 #include "Bibliotecario.h"
 
+#include <exception>
+
+class ErroGenericoException : public std::exception {
+    public:
+    virtual const char* what() const noexcept {
+        return "O programa apresenta um erro!";
+    }
+};
+
+class ErroAutorNaoEncontradoException : public ErroGenericoException {
+    public:
+    virtual const char* what() const noexcept {
+        return "Lamentamos, mas não temos exemplares desse autor. Faça outra Pesquisa :)";
+    }
+};
+
+class ErroAutorVazioException : public ErroGenericoException {
+    public:
+    virtual const char* what() const noexcept {
+        return "Digite um autor para fazer a pesquisa.";
+    }
+};
+
+class ErroGeneroNaoEncontradoException : public ErroGenericoException {
+    public:
+     char* what() {
+        return "Lamentamos, mas não temos exemplares desse gênero. Faça outra Pesquisa :)";
+    }
+};
+
+class ErroGeneroVazioException : public ErroGenericoException {
+    public:
+     char* what() {
+        return "Digite um gênero para fazer a pesquisa.";
+    }
+};
+
+class ErroNomeNaoEncontradoException : public ErroGenericoException {
+    public:
+    virtual const char* what() const noexcept {
+        return "Lamentamos, mas não temos exemplares desse título. Faça outra Pesquisa :)";
+    }
+};
+
+class ErroNomeVazioException : public ErroGenericoException {
+    public:
+    virtual const char* what() const noexcept {
+        return "Digite um título para fazer a pesquisa.";
+    }
+};
 
 class Biblioteca
 {

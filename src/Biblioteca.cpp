@@ -1,6 +1,8 @@
 #include "Biblioteca.h"
 #include <utility>
 
+using namespace std;
+
 Biblioteca::Biblioteca()
 {}
 
@@ -8,23 +10,22 @@ void Biblioteca::get_livros_autor(std::string autor)
 {
    int qtd = 0;
 
-   for(auto& livro : _livros_estoque)
-   {
-      if(livro.get_autor() == autor)
-      {
-        std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
-        qtd++;
-      }
-   }
+        for(auto& livro : _livros_estoque)
+        {
+        if(livro.get_autor() == autor)
+        {
+            std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
+            qtd++;
+        }
+        }
 
-   if(qtd == 0)
-   {  
-      //exceção
-      std::cout<< "Lamentamos, mas não temos exemplares desse autor. Faça outra Pesquisa :)" << std::endl;
-   }
-   else{
-      std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
-   }
+    //falta corrigir a mensagem de erro
+    if (qtd != 0)
+        cout << "Quer alugar algum desses livros? Digite \"Alugar\" para continuar.";
+    if (autor.empty())
+        throw ErroAutorVazioException();
+    if (qtd == 0)
+        throw ErroAutorNaoEncontradoException();
 }
 
 
@@ -37,18 +38,29 @@ void Biblioteca::get_livros_genero(std::string genero)
       if(livro.get_genero() == genero)
       {
         std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
+        qtd++;
       }
    }
 
+    //falta corrigir a mensagem de erro - fica muito grande
+    if (qtd != 0)
+        cout << "Quer alugar algum desses livros? Digite \"Alugar\" para continuar.";
+    if (genero.empty())
+        throw ErroGeneroVazioException();
+    if (qtd == 0)
+        throw ErroGeneroNaoEncontradoException();
 
-   if(qtd == 0)
-   {
-      //exceção
-      std::cout<< "Lamentamos, mas não temos exemplares desse gêneror. Faça outra Pesquisa :)" << std::endl;
-   }
-   else{
-      std::cout<< "Quer alugar algum desses livros? Digite \"Alugar\" para continuar."<< std::endl;
-   }
+    //a mensagem de erro fica em branco
+    // try {
+    //     if (qtd != 0)
+    //     cout << "Quer alugar algum desses livros? Digite \"Alugar\" para continuar.";
+    // } catch (ErroGeneroVazioException e) {
+    //     if (genero.empty())
+    //     cout << e.what();
+    // } catch (ErroGeneroNaoEncontradoException e) {
+    //     if (qtd == 0)
+    //     cout << e.what();
+    // }
 }
 
 
@@ -61,18 +73,18 @@ void Biblioteca::get_livros_nome(std::string nome)
       if(livro.get_titulo() == nome)
       {
         std::cout<< livro.get_titulo() << ", escrito por " << livro.get_autor() << "e do gênero " << livro.get_genero() << ". Exemplares Disponíveis: " << livro.get_quantidade() << std::endl;
+        qtd++;
       }
    }
 
+    //falta implementar o try catch
+    if (qtd != 0)
+        cout << "Quer alugar esse livro? Digite \"Alugar\" para continuar.";
+    if (nome.empty())
+        cout << "Digite um título para fazer a pesquisa.";
+    if (qtd == 0)
+        cout << "Lamentamos, mas não temos exemplares desse título. Faça outra Pesquisa :)";
 
-   if(qtd == 0)
-   {
-      //exceção
-      std::cout<< "Lamentamos, mas não temos exemplares desse título. Faça outra Pesquisa :)" << std::endl;
-   }
-   else{
-      std::cout<< "Quer alugar um exemplar? Digite \"Alugar\" para continuar."<< std::endl;
-   }
 }
 
 
