@@ -16,7 +16,7 @@ if(eh_admin)
         }
         else
         {
-            std::cout << "  PESQUISAR LIVRO TITULO - Busca o livro atraves do titulo no banco de dados" << std::endl;/////////////////////
+            std::cout << "  PESQUISAR LIVRO TITULO - Busca o livro atraves do titulo no banco de dados e permite alugá-lo." << std::endl;/////////////////////
             std::cout << "  PESQUISAR LIVRO AUTOR - Busca os livros do autor no banco de dados" << std::endl;/////////////////////////////
             std::cout << "  PESQUISAR LIVRO GENERO - Busca o livro do genero no banco de dados" << std::endl;/////////////////////////////
             std::cout << "  VER LOCACOES - Lista todos os livros alugados pelo usuario" << std::endl;
@@ -49,10 +49,10 @@ int main()
         bool primeiroLoop = true;
         while(!deslogado)
         {
-            std::cout << "Escolha uma acao: ( Digite HELP para listar todas as disponíveis) " << std::endl;
+            std::cout << "Escolha uma acao: (Digite HELP para listar todas as disponíveis) " << std::endl;
             std::cout << std::endl;
 
-            if(primeiroLoop)
+            if(primeiroLoop) //feito
             {
                 imprimir_comandos(isAdm);
                 primeiroLoop = false;
@@ -75,22 +75,27 @@ int main()
                 }
             }
 
-            else if(comando == "ADD PESSOA")
+            else if(comando == "ADD PESSOA") //em andamento
             {
                 if(isAdm)
                 {
                     std::string nome, senha, tipo;
 
-                    std::cout<< "Deseja cadastrar um usuário (U) ou um bibliotecário (B)?" << std::endl;
-                    getline(std::cin, tipo);
+                    while (tipo.size() == 0) {                    
+                        std::cout<< "Deseja cadastrar um usuário (U) ou um bibliotecário (B)?" << std::endl;
+                        getline(std::cin, tipo);
+                    }
 
                     if (tipo == "U")
-                    {
-                        std::cout << "Digite o nome do usuário que deseja cadastrar:"  << std::endl;
-                        getline(std::cin, nome);
-                        std::cout << "Digite a senha do usuário que deseja cadastrar:"  << std::endl;
-                        getline(std::cin, senha);
-                        
+                    {   
+                        while (nome.size() == 0) {
+                            std::cout << "Digite o nome do usuário que deseja cadastrar:"  << std::endl;
+                            getline(std::cin, nome);
+                        }
+                        while (senha.size() == 0) {
+                            std::cout << "Digite a senha do usuário que deseja cadastrar:"  << std::endl;
+                            getline(std::cin, senha);
+                        }
                         Usuario aux = Usuario(nome, senha);
                         biblioteca.adiciona_usuarios_no_vetor(&aux);
                     }
@@ -145,24 +150,26 @@ int main()
                 imprimir_comandos(isAdm);
             }
             
-            else if(comando == "PESQUISAR LIVRO TITULO")
+            else if(comando == "PESQUISAR LIVRO TITULO") //feito
             {
                     if(!isAdm)
                     {
-                        std::cout << "Digite o titulo do livro:" <<std::endl;
                         std::string nome;
-                        getline(std::cin, nome);
+                        while(nome.size() == 0) {
+                            std::cout << "Digite o titulo do livro:" <<std::endl;
+                            getline(std::cin, nome);
+                        }
                         if(biblioteca.get_livros_nome(nome))
                         {
-                            std::cout<< "Deseja alugar este exemplar? (Y/N)"<< std::endl;
-
                             std::string resposta;
-                            getline(std::cin, resposta);
+                            while(resposta != "Y" && resposta != "N") {
+                                std::cout<< "Deseja alugar este exemplar? (Y/N)"<< std::endl;
+                                getline(std::cin, resposta);
+                            }
 
                             if(resposta == "Y")
                             {
                                 biblioteca.adicionar_livro_alugado(nome);
-
                             }
 
                         }
@@ -177,11 +184,12 @@ int main()
             {
                 if(!isAdm)
                 {
-                    std::cout << "Digite o nome do autor:" <<std::endl;
                     std::string nome;
-                    getline(std::cin, nome);
+                    while (nome.size() == 0) {
+                        std::cout << "Digite o nome do autor:" <<std::endl;
+                        getline(std::cin, nome);
+                    }
                     biblioteca.get_livros_autor(nome);
-
                 }
                 else
                 {
@@ -193,9 +201,11 @@ int main()
             {
                     if(!isAdm)
                     {
-                        std::cout << "Digite o genero desejado:" <<std::endl;
                         std::string nome;
-                        getline(std::cin, nome);
+                        while (nome.size() == 0){
+                            std::cout << "Digite o genero desejado:" <<std::endl;
+                            getline(std::cin, nome);
+                        }
                         biblioteca.get_livros_genero(nome);
                     }
                     else
@@ -217,20 +227,22 @@ int main()
 
             else if(comando == "ALUGAR LIVRO")
             {
+                std::string nome;
+                while (nome.size() == 0) {
                     std::cout << "Digite o titulo do livro:" <<std::endl;
-                    std::string nome;
                     getline(std::cin, nome);
-                    biblioteca.adicionar_livro_alugado(nome);
+                }
+                biblioteca.adicionar_livro_alugado(nome);
    
             }
 
             else if(comando == "DEVOLVER LIVRO")
             {
-
-                    std::cout << "Digite o titulo do livro:" <<std::endl;
                     std::string nome;
-                    getline(std::cin, nome);
-                    std::cout << nome;
+                    while (nome.size() == 0) {
+                        std::cout << "Digite o titulo do livro:" <<std::endl;
+                        getline(std::cin, nome);
+                    }
                     biblioteca.devolver_livro_alugado(nome);
 
             }

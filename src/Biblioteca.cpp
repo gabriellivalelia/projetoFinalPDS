@@ -22,8 +22,8 @@ void Biblioteca::get_livros_autor(std::string autor)
    if(qtd == 0)
    {
       //exceção
-      std::cout<< "Lamentamos, mas nao temos exemplares desse autor. Realize outra Pesquisa :)" << std::endl;
-      std::cout<<std::endl;
+      std::cout<< "Lamentamos, mas nao temos exemplares desse autor." << std::endl;
+
    }
 }
 
@@ -45,8 +45,7 @@ void Biblioteca::get_livros_genero(std::string genero)
    if(qtd == 0)
    {
       //exceção
-      std::cout<< "Lamentamos, mas nao temos exemplares desse genero. Faça outra Pesquisa :)" << std::endl;
-      std::cout<<std::endl;
+      std::cout<< "Lamentamos, mas nao temos exemplares desse genero." << std::endl;
 
    }
 }
@@ -68,7 +67,7 @@ bool Biblioteca::get_livros_nome(std::string nome)
    if(qtd == 0)
    {
       //exceção
-      std::cout<< "Lamentamos, mas nao temos exemplares desse titulo. Faça outra Pesquisa :)" << std::endl;
+      std::cout<< "Lamentamos, mas nao temos exemplares desse titulo." << std::endl;
       return false;
    }
    else{
@@ -133,44 +132,63 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
 
 void Biblioteca::devolver_livro_alugado(std::string titulo)
 {
+    //seleciona titulo que nao foi alugado por voce
    Livro* livro = get_livro_especifico(titulo);
 
-   livro->update_quantidade(1); 
-   _usuarioLogado->excluir_livro_do_vetor(*livro);
-   update_lista_de_espera();
+   if (livro == nullptr) {
+        std::cout << "Este livro não está entre suas locações." << std::endl;
+   } else {
+        livro->update_quantidade(1); 
+        _usuarioLogado->excluir_livro_do_vetor(*livro);
+        update_lista_de_espera();
 
-   std::cout<<"Livro devolvido com sucesso! Obrigada pelo cuidado!" <<std::endl <<std::endl;
+        std::cout<<"Livro devolvido com sucesso! Obrigada pelo cuidado!" <<std::endl;
+
+        std::cout<< "Aqui estão suas locações atualizadas:"<< std::endl;
+        ver_livros_alugados();
+        std::cout << std::endl;
+   }
 }
 
 
 void Biblioteca::adicionar_livro_alugado(std::string titulo)
 {
     Livro* livro = get_livro_especifico(titulo);
-    
 
-    if (livro->get_quantidade() == 0)
-    {
-        std::cout << "O Titulo escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
-
-        std::string resposta;
-        getline(std::cin, resposta);
-
-        if(resposta == "Y")
+    if (livro != nullptr) {
+        std::cout<< livro->get_titulo() << ", escrito por " << livro->get_autor() << ". Genero " << livro->get_genero() << std::endl;
+        if (livro->get_quantidade() == 0)
         {
-            add_lista_espera(livro);
-        }
-        else if(resposta == "N"){
-            std::cout << "Certo! Pesquise outro titulo" << std::endl;
-        }
-    }
-    else
-    {   
-        Livro aux = *livro;
-        _usuarioLogado->adicionar_livro_no_vetor(aux);
-        livro->update_quantidade(-1);
-        std::cout <<"Livro alocado com sucesso!"<< std::endl << std::endl;
+            std::cout << "O Titulo escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
 
+            std::string resposta;
+            getline(std::cin, resposta);
+
+            if(resposta == "Y")
+            {
+                add_lista_espera(livro);
+            }
+            else if(resposta == "N"){
+                std::cout << "Certo! Pesquise outro titulo" << std::endl;
+            }
+        }
+        else
+        {   
+            Livro aux = *livro;
+            if (_usuarioLogado->adicionar_livro_no_vetor(aux) == true) {
+                livro->update_quantidade(-1);
+                std::cout <<"Livro alugado com sucesso!"<< std::endl;
+            }
+            std::cout<< "Aqui estão suas locações atualizadas:"<< std::endl;
+            ver_livros_alugados();
+            std::cout << std::endl;
+
+        }
+
+    } else if (livro == nullptr) {
+        std::cout<< "Lamentamos, mas nao temos exemplares desse titulo." << std::endl;
     }
+    
 }
 void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
@@ -210,7 +228,7 @@ void Biblioteca::preencher_livros()
    Livro dez = Livro("É assim  que acaba" , "Colleen Hoover" , "Romance", 3);
    Livro onze = Livro("É assim que começa", "Colleen Hoover", "Romance" , 5 );
    Livro doze = Livro("Frankenstein" , "Mary Shelley", "Terror" , 7 );
-   Livro treze = Livro("Histórias Extraordinárias", "Edgar Allan Poe" , "Terror" , 1 );
+   Livro treze = Livro("Historias Extraordinarias", "Edgar Allan Poe" , "Terror" , 1 );
    Livro quatorze = Livro("O exorcista", "William Peter Blatty" , "Terror" , 6);
    Livro quinze = Livro("Com não ser um babaca: Guia de etiqueta para o cotidiano" , "Megam Doherty" , "Comédia", 2 );
    Livro dezesseis = Livro("As 100 piores Ideias da História", "MIchael N. Smith", "Comédia", 5);
@@ -316,7 +334,6 @@ bool Biblioteca::login(bool* isAdm)
 {
   std::string _nome, _senha, _tipo;
     
-    //verificar se é um bibliotecario mesmo
     while(_nome.size() == 0) {
         std::cout<< "Digite seu nome" << std::endl;
         getline(cin ,_nome);
