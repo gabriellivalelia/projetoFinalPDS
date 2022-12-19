@@ -79,14 +79,14 @@ int main()
             {
                 if(isAdm)
                 {
-                    std::string nome, senha, tipo;
+                    std::string nome, senha, tipo = "";
 
                     while (tipo.size() == 0) {                    
                         std::cout<< "Deseja cadastrar um usuário (U) ou um bibliotecário (B)?" << std::endl;
                         getline(std::cin, tipo);
                     }
 
-                    if (tipo == "U")
+                    if (tipo == "U") 
                     {   
                         while (nome.size() == 0) {
                             std::cout << "Digite o nome do usuário que deseja cadastrar:"  << std::endl;
@@ -100,22 +100,25 @@ int main()
                         biblioteca.adiciona_usuarios_no_vetor(&aux);
                     }
                     else if(tipo == "B"){
-                        std::cout << "Digite o nome do bibliotecário que deseja cadastrar:"  << std::endl;
-                        getline(std::cin, nome);
-                        std::cout << "Digite a senha do bibliotecário que deseja cadastrar:"  << std::endl;
-                        getline(std::cin, senha);
-                        
+                        while (nome.size() == 0) {
+                            std::cout << "Digite o nome do bibliotecário que deseja cadastrar:"  << std::endl;
+                            getline(std::cin, nome);
+                        }
+                        while (senha.size() == 0) {
+                            std::cout << "Digite a senha do bibliotecário que deseja cadastrar:"  << std::endl;
+                            getline(std::cin, senha);
+                        }
                         Bibliotecario aux = Bibliotecario(nome, senha);
                         biblioteca.adiciona_bibliotecarios_no_vetor(&aux);
                     }
-                    else{
+                    else {
                        std::cout << "Comando inválido." << std::endl << std::endl; 
                     }
                     
                 }
                 else
                 {
-                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
+                    std::cout << "Voce não tem permissao para utilizar este comando" << std::endl;
                 }
             }
 
