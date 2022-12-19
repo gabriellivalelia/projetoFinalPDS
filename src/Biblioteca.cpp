@@ -219,19 +219,30 @@ void Biblioteca::adiciona_usuarios_no_vetor(Usuario* usuario)
 
 void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
 {
-    std::cout << bibliotecario_existe(bibliotecario->get_nome()) << std::endl; //retornar false -> não encontrou ninguém com o mesmo nome
-    if (!bibliotecario_existe(bibliotecario->get_nome())) {
         _bibliotecarios.push_back(bibliotecario);
         std::cout << "Pessoa adicionada com sucesso!" << std::endl << std::endl;
 
         std::cout<< "Aqui está a lista de pessoas cadastradas atualizada:"<< std::endl;
         imprime_pessoas();
-        std::cout << std::endl;       
-    } else {
-        std::cout<< "Erro: Este bibliotecário já está cadastrado."<< std::endl << std::endl;
-    }
-
+        std::cout << std::endl;
 }
+
+// void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
+// {
+
+//     std::cout << bibliotecario_existe(bibliotecario->get_nome()) << std::endl; //retornar false -> não encontrou ninguém com o mesmo nome
+//     if (!bibliotecario_existe(bibliotecario->get_nome())) {
+//         _bibliotecarios.push_back(bibliotecario);
+//         std::cout << "Pessoa adicionada com sucesso!" << std::endl << std::endl;
+
+//         std::cout<< "Aqui está a lista de pessoas cadastradas atualizada:"<< std::endl;
+//         imprime_pessoas();
+//         std::cout << std::endl;       
+//     } else {
+//         std::cout<< "Erro: Este bibliotecário já está cadastrado."<< std::endl << std::endl;
+//     }
+
+// }
 
 void Biblioteca::preencher_livros()
 {
