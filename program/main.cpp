@@ -2,6 +2,9 @@
 #include "Biblioteca.h"
 #include "Usuario.h"
 
+#include <algorithm>
+#include <stdlib.h>
+
 void imprimir_comandos(bool eh_admin)
 {
 if(eh_admin)
@@ -28,6 +31,12 @@ if(eh_admin)
         }
 }
 
+bool isNumber(const string& str)
+{
+    return !str.empty() &&
+        std::find_if(str.begin(), str.end(),
+            [](unsigned char c) { return !std::isdigit(c); }) == str.end();
+}
 
 
 int main()
@@ -96,8 +105,12 @@ int main()
                             std::cout << "Digite a senha do usuário que deseja cadastrar:"  << std::endl;
                             getline(std::cin, senha);
                         }
-                        Usuario aux = Usuario(nome, senha);
-                        biblioteca.adiciona_usuarios_no_vetor(&aux);
+                        if (!biblioteca.usuario_existe(nome)) { //deu CERTO
+                            Usuario* aux = new Usuario(nome, senha);
+                            biblioteca.adiciona_usuarios_no_vetor(aux);
+                        } else {
+                            std::cout<< "Erro: Este usuário já está cadastrado."<< std::endl << std::endl;
+                        }
                     }
                     else if(tipo == "B"){
                         while (nome.size() == 0) {
@@ -108,8 +121,13 @@ int main()
                             std::cout << "Digite a senha do bibliotecário que deseja cadastrar:"  << std::endl;
                             getline(std::cin, senha);
                         }
-                        Bibliotecario aux = Bibliotecario(nome, senha);
-                        biblioteca.adiciona_bibliotecarios_no_vetor(&aux);
+                        if (!biblioteca.bibliotecario_existe(nome)) { //deu CERTO
+                            Bibliotecario* aux = new Bibliotecario(nome, senha);
+                            biblioteca.adiciona_bibliotecarios_no_vetor(aux);
+                        } else {
+                            std::cout<< "Erro: Este bibliotecário já está cadastrado."<< std::endl << std::endl;
+                        }
+
                     }
                     else {
                        std::cout << "Comando inválido." << std::endl << std::endl; 
@@ -126,21 +144,37 @@ int main()
             {
                 if(isAdm)
                 {
-                    std::string titulo, autor, genero;
+                    std::string titulo, autor, genero, buffer, str_qtd;
                     int qtd;
-
-                    std::cout << "Digite o titulo do livro que deseja cadastrar:"  << std::endl;
-                    getline(std::cin, titulo);
-                    std::cout << "Digite o nome do autor do livro que deseja cadastrar:"  << std::endl;
-                    getline(std::cin, autor);
-                    std::cout << "Digite a quantidade de exemplares do livro que deseja cadastrar:"  << std::endl;
-                    std::cin >> qtd;
-                    std::cout << "Digite o genero do livro que deseja cadastrar:"  << std::endl;
-                    getline(std::cin, genero);
-
-                    Livro aux = Livro(titulo, autor, genero, qtd);
-                    biblioteca.adiciona_livros_no_estoque(aux);
-
+                    
+                    while (titulo.size() == 0) {
+                        std::cout << "Digite o titulo do livro que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, titulo);
+                    }
+                    while (autor.size() == 0) {
+                        std::cout << "Digite o nome do autor do livro que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, autor);
+                    }
+                    while (str_qtd.size() == 0) {
+                        std::cout << "Digite a quantidade de exemplares do livro que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, str_qtd);
+                    }
+                    while (!isNumber(str_qtd) || stoi(str_qtd) <= 0 || str_qtd.size() == 0) { //|| str_qtd <= "0"
+                        std::cout << "A quantidade mínima deve ser maior que 0 e deve ser um número."  << std::endl;
+                        getline(std::cin, str_qtd);
+                    }
+                    qtd = stoi(str_qtd);
+                    while (genero.size() == 0) {
+                        std::cout << "Digite o genero do livro que deseja cadastrar:"  << std::endl;
+                        getline(std::cin, genero);
+                    }
+                    
+                    if (!biblioteca.livro_existe(titulo)) {
+                        Livro aux = Livro(titulo, autor, genero, qtd);
+                        biblioteca.adiciona_livros_no_estoque(aux);
+                    } else {
+                        std::cout<< "Erro: Este livro já está no acervo."<< std::endl << std::endl;
+                    }
                 }
                 else
                 {

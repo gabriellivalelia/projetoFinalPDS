@@ -194,6 +194,11 @@ void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
    _livros_estoque.push_back(livro);
    std::cout <<"Livro cadastrado com sucesso!"<< std::endl << std::endl;
+
+    std::cout<< "Aqui está o acervo atualizado:"<< std::endl;
+    imprime_livros();
+    std::cout << std::endl;
+  
 }
 
 void Biblioteca::ver_livros_alugados()
@@ -204,16 +209,12 @@ void Biblioteca::ver_livros_alugados()
 
 void Biblioteca::adiciona_usuarios_no_vetor(Usuario* usuario)
 {
-    if (!usuario_existe(usuario->get_nome())) {
         _usuarios.push_back(usuario);
         std::cout << "Usuario adicionada com sucesso!" << std::endl;
 
         std::cout<< "Aqui está a lista de pessoas cadastradas atualizada:"<< std::endl;
         imprime_pessoas();
         std::cout << std::endl;
-    } else {
-        std::cout<< "Erro: Este usuário já está cadastrado."<< std::endl << std::endl;
-    }
 
 }
 
@@ -226,23 +227,6 @@ void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
         imprime_pessoas();
         std::cout << std::endl;
 }
-
-// void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
-// {
-
-//     std::cout << bibliotecario_existe(bibliotecario->get_nome()) << std::endl; //retornar false -> não encontrou ninguém com o mesmo nome
-//     if (!bibliotecario_existe(bibliotecario->get_nome())) {
-//         _bibliotecarios.push_back(bibliotecario);
-//         std::cout << "Pessoa adicionada com sucesso!" << std::endl << std::endl;
-
-//         std::cout<< "Aqui está a lista de pessoas cadastradas atualizada:"<< std::endl;
-//         imprime_pessoas();
-//         std::cout << std::endl;       
-//     } else {
-//         std::cout<< "Erro: Este bibliotecário já está cadastrado."<< std::endl << std::endl;
-//     }
-
-// }
 
 void Biblioteca::preencher_livros()
 {
@@ -338,6 +322,18 @@ bool Biblioteca::usuario_existe(std::string nome)
     for( Usuario* usuario : _usuarios)
     {
         if(usuario->get_nome() == nome)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Biblioteca::livro_existe(std::string titulo)
+{
+    for (Livro livro : _livros_estoque)
+    {
+        if (livro.get_titulo() == titulo)
         {
             return true;
         }
