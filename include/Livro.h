@@ -15,14 +15,17 @@ class Livro {
          * Título do livro.
          */ 
         std::string _titulo;
+
         /**
          * Autor do livro.
          */ 
         std::string _autor;
+
         /**
          * Gênero do livro.
          */ 
-        std::string _genero;
+        std::string _genero
+        ;
         /**
          * Quantidade de exemplares desse livro no sistema.
          */ 
@@ -43,29 +46,35 @@ class Livro {
             std::string genero,
             unsigned int quantidade
         );
+
         /**
          * @brief Obtém o título do livro corrente.
          * @return Título do livro corrente.
          */
         std::string get_titulo();
+
         /**
          * @brief Obtém o autor do livro corrente.
          * @return Autor do livro corrente.
          */
         std::string get_autor();
+
         /**
          * @brief Obtém o gênero do livro corrente.
          * @return Gênero do livro corrente.
          */
         std::string get_genero();
+
         /**
          * @brief Obtém a quantidade de exemplares disponíveis do livro corrente.
          * @return Quantidade de exemplares disponíveis do livro corrente.
          */
         unsigned int get_quantidade();
+
         /**
          * @brief Altera a quantidade de exemplares disponíveis do livro corrente.
          * @param updateQuantidade Quantidade de exemplares que serão somados(se > 0) ou subtraídos ( se < 0 ) da quantidade atual.
+         * @exception Caso se queira diminuir uma quantidade de exemplares maior que a disponível, se imprimme um alerta. 
          */
         void update_quantidade(int updateQuantidade);
 };
