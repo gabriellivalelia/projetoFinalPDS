@@ -35,6 +35,8 @@ bool Usuario::adicionar_livro_no_vetor(Livro livro) {
       _livros_alugados.push_back(livro);
       return true;
    }
+
+   return false;
 }
 
 
