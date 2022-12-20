@@ -577,8 +577,4 @@ void Biblioteca::imprime_pessoas(){
 }
 
 
-//retorna true se bibliotecario
-// bool Biblioteca::eh_super_user()
-// {
-//     return _pessoaLogada->get_tipo();
-// } 
+
