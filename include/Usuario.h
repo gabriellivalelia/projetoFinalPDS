@@ -27,18 +27,24 @@ class Usuario : public Pessoa {
             std::string nome,
             std::string senha
         );
+
         /**
          * @brief Imprime todos os livros alugados pelo usuário corrente.
+         * @exception Caso o usuário não tiver livros alugados imprime um alerta indicando isso.
          */
         void visualizar_livros_alugados();
+
         /**
          * @brief Adiciona um livro no vetor de livros alugados pelo usuário corrente.
          * @param livro O livro que será adicionado.
+         * @exception Caso o livro já esteja no vetor, um alerta e impresso indicando isso e o livro não é inserido.
          * @return True caso a ação seja bem sucedida, o que acontece caso esse livro ainda não exista no vetor, e false caso contrário.
          */
         bool adicionar_livro_no_vetor(Livro livro);
+
         /**
          * @brief Remove um livro do vetor de livros alugados pelo usuário corrente.
+         * @exception Caso o livro não esteja no vetor de livros alugaar, um alerta é impresso indicando isso.
          * @param livro O livro que será removido.
          */
         void excluir_livro_do_vetor(Livro livro);
