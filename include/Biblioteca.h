@@ -43,6 +43,7 @@ class Biblioteca
 
         bool usuario_existe(std::string nome);
         bool bibliotecario_existe(std::string nome);
+        bool livro_existe(std::string titulo);
 
         bool login(bool* isAdm);
         bool logout();

@@ -11,7 +11,7 @@ void Usuario::visualizar_livros_alugados() {
    
    if(_livros_alugados.size() == 0)
    {
-      std::cout << "Voce nao tem livros alocados" << std::endl << std::endl;
+      std::cout << "Voce nao tem livros alugados" << std::endl << std::endl;
    }
    else{
       for(auto livro = _livros_alugados.begin(); livro != _livros_alugados.end(); livro++ )
@@ -21,8 +21,20 @@ void Usuario::visualizar_livros_alugados() {
    } 
 }
 
-void Usuario::adicionar_livro_no_vetor(Livro livro) {
-   _livros_alugados.push_back(livro);
+bool Usuario::adicionar_livro_no_vetor(Livro livro) {
+   int qtd = 0;
+   for(auto livro_existe = _livros_alugados.begin(); livro_existe != _livros_alugados.end(); livro_existe++ )
+   {
+      if (livro_existe->get_titulo() == livro.get_titulo()) {
+         std::cout << "Este livro já está na sua lista de locações." << std::endl;
+         qtd++;
+         return false;
+      }
+   }
+   if (qtd == 0) {
+      _livros_alugados.push_back(livro);
+      return true;
+   }
 }
 
 

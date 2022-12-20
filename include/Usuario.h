@@ -17,7 +17,7 @@ class Usuario : public Pessoa {
         );
         void visualizar_livros_alugados();
 
-        void adicionar_livro_no_vetor(Livro livro);
+        bool adicionar_livro_no_vetor(Livro livro);
 
         void excluir_livro_do_vetor(Livro livro);
 
