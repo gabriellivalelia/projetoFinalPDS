@@ -230,7 +230,7 @@ int main()
                 }
                 else
                 {
-                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
+                    std::cout << "Voce não tem permissao para utilizar este comando" << std::endl;
                 }
             }
 
@@ -247,7 +247,7 @@ int main()
                     }
                     else
                     {
-                        std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
+                        std::cout << "Voce não tem permissao para utilizar este comando" << std::endl;
                     }
             }
 
@@ -264,29 +264,46 @@ int main()
 
             else if(comando == "ALUGAR LIVRO")
             {
-                std::string nome;
-                while (nome.size() == 0) {
-                    std::cout << "Digite o titulo do livro:" <<std::endl;
-                    getline(std::cin, nome);
+                if (!isAdm) {
+                    std::string nome;
+                    while (nome.size() == 0) {
+                        std::cout << "Digite o titulo do livro:" <<std::endl;
+                        getline(std::cin, nome);
+                    }
+                    biblioteca.adicionar_livro_alugado(nome);
                 }
-                biblioteca.adicionar_livro_alugado(nome);
+                else
+                {
+                    std::cout << "Voce não tem permissao para utilizar este comando." << std::endl;
+                }
    
             }
 
             else if(comando == "DEVOLVER LIVRO")
             {
+                if (!isAdm) {
                     std::string nome;
                     while (nome.size() == 0) {
                         std::cout << "Digite o titulo do livro:" <<std::endl;
                         getline(std::cin, nome);
                     }
                     biblioteca.devolver_livro_alugado(nome);
-
+                }
+                else
+                {
+                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
+                }
             }
 
             else if(comando == "VER LOCACOES")
             {
+                if (!isAdm) {
                     biblioteca.ver_livros_alugados();
+                }
+                else
+                {
+                    std::cout << "Voce nao tem permissao para utilizar este comando" << std::endl;
+                }
 
             }
             

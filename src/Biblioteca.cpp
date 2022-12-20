@@ -132,7 +132,6 @@ Livro* Biblioteca::get_livro_especifico(std::string titulo)
 
 void Biblioteca::devolver_livro_alugado(std::string titulo)
 {
-    //seleciona titulo que nao foi alugado por voce
    Livro* livro = get_livro_especifico(titulo);
 
    if (livro == nullptr) {
@@ -230,17 +229,17 @@ void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
 
 void Biblioteca::preencher_livros()
 {
-   Livro um = Livro("O Visconde que me amava", "Júlia Queen" , "Romance", 1 );
-   Livro dois = Livro("O Duque e eu", "Júlia Queen", "Romance" , 4  );
-   Livro tres = Livro( "Diário de um banana: Segurando Vela", "Jeff Kenny ", "InfantoJuvenil", 5 );
-   Livro quatro = Livro("Diário de um banana: Vai ou Racha", "Jeff Kenny ", "InfantoJuvenil", 3 );
-   Livro cinco = Livro("Diário de um banana: Rodrick é o cara", "Jeff Kenny ", "InfantoJuvenil", 12 );
-   Livro seis = Livro("A culpa é das estrelas" ,"John Green" , "Romance", 12);
+   Livro um = Livro("O Visconde que me amava", "Julia Queen" , "Romance", 1 );
+   Livro dois = Livro("O Duque e eu", "Julia Queen", "Romance" , 4  );
+   Livro tres = Livro( "Diario de um banana: Segurando Vela", "Jeff Kenny ", "InfantoJuvenil", 5 );
+   Livro quatro = Livro("Diario de um banana: Vai ou Racha", "Jeff Kenny ", "InfantoJuvenil", 3 );
+   Livro cinco = Livro("Diario de um banana: Rodrick eh o cara", "Jeff Kenny ", "InfantoJuvenil", 12 );
+   Livro seis = Livro("A culpa eh das estrelas" ,"John Green" , "Romance", 12);
    Livro sete = Livro("Cidade de Papel" , "John Green" , "Romance", 4);
    Livro oito = Livro( "Orgulho e Preconceito", "Jane Austen", "Romance" , 6 );
-   Livro nove = Livro( "Turma da Mônica: Almanaque", "Maurício de Souza", "Quadrinhos", 4 );
-   Livro dez = Livro("É assim  que acaba" , "Colleen Hoover" , "Romance", 3);
-   Livro onze = Livro("É assim que começa", "Colleen Hoover", "Romance" , 5 );
+   Livro nove = Livro( "Turma da Monica: Almanaque", "Mauricio de Souza", "Quadrinhos", 4 );
+   Livro dez = Livro("Eh assim  que acaba" , "Colleen Hoover" , "Romance", 3);
+   Livro onze = Livro("Eh assim que começa", "Colleen Hoover", "Romance" , 5 );
    Livro doze = Livro("Frankenstein" , "Mary Shelley", "Terror" , 7 );
    Livro treze = Livro("Historias Extraordinarias", "Edgar Allan Poe" , "Terror" , 1 );
    Livro quatorze = Livro("O exorcista", "William Peter Blatty" , "Terror" , 6);
