@@ -334,7 +334,7 @@ void Biblioteca::preencher_pessoas() {
     _usuarios.push_back(Emanuel);
     Usuario* Maria = new Usuario("Maria Silva", "9834vg");
     _usuarios.push_back(Maria);
-    Usuario* Aline = new Usuario("Aline Amaral", "6790gç");
+    Usuario* Aline = new Usuario("Aline Amaral", "6790gc");
     _usuarios.push_back(Aline);
     Usuario* Gabrielli = new Usuario("Gabrielli Valelia", "1706vs");
     _usuarios.push_back(Gabrielli);
