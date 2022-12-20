@@ -51,7 +51,7 @@ class Biblioteca
 
     public:
         /**
-         * Cria um novo livro.
+         * Cria uma nova bibliooteca.
          * @brief Constructor.
          */
         Biblioteca();
@@ -59,18 +59,21 @@ class Biblioteca
         /**
          * @brief Busca e imprime os dados de um livro a partir de seu título.
          * @param nome Título do livro que será buscado.
+         * @exception Caso não exista um livro com o título passado por parâmetro um alerta é impresso indicando isso.
          * @return True caso o livro se encontrado e false caso não.
          */
         bool get_livros_nome(std::string nome);
 
         /**
-         * @brief Busca e imprime os dados de todos os livros de um autor, caso existam, e uma mensagem de alerta, caso não.
+         * @brief Busca e imprime os dados de todos os livros de um autor, caso existam.
+         * @exception Caso não exista nenhum livro do autor solicitado um alerta indicando isso é impresso.
          * @param autor O nome do autor que será buscado.
          */
         void get_livros_autor(std::string autor);
 
         /**
-         * @brief Busca e imprime os dados de todos os livros de um gênero, caso existam, e uma mensagem de alerta, caso não.
+         * @brief Busca e imprime os dados de todos os livros de um gênero, caso existam.
+         * @exception Caso não exista nenhum livro do gênero solicitado um alerta indicando isso é impresso.
          * @param genero O genero que será buscado.
          */
         void get_livros_genero(std::string genero);
@@ -87,18 +90,23 @@ class Biblioteca
 
         /**
          * @brief Remove o livro do vetor de livros alugados do usuário logado e aumenta a quantidade de exemplares disponíveis em 1 do livro devolvido.
+         * @exception Caso o livro não seja encontrado na biblioteca um alerta para isso é impresso e a função é finalizada.
          * @param titulo O Título do livro que será devolvido.
          */
         void devolver_livro_alugado(std::string titulo);
 
         /**
          * @brief Adiciona o livro no vetor de livros alugados do usuário logado e diminuí a quantidade de exemplares disponíveis em 1 do livro alugado.
+         * @exception Caso o livro exista no sistema mas a quantidade de exemplares disponíveis seja 0, é perguntado ao usuário se ele deseja entrar na 
+        lista de espera. Em caso afirmativo, a função add_lista_de_espera é chamada, rm caso negativo a função é encerrada, em caso de resposta diferente
+        um alerta é impresso e a função é finalizada.
+         * @exception Caso o livro não exista no sistema um alerta é impresso e a função é finalizada.
          * @param titulo O Título do livro que será alugado.
          */
         void adicionar_livro_alugado(std::string titulo);
 
         /**
-         * @brief Cha a a função de ver todos os livros alugados do usuário logado.
+         * @brief Chama a função de ver todos os livros alugados do usuário logado.
          */
         void ver_livros_alugados();
 
@@ -145,18 +153,26 @@ class Biblioteca
          * @brief Função de Login do sistema.
          * @param isAdm Variável do tipo bool* que recebe true caso o login seja bem sucedido e feito por um bibliotecário e false caso seja feito
         por um usuário. Essa variável é usada no controle de manipulação dos métodos na main.
+         * @exception Caso o usuário insira um tipo inválido, um alerta é impresso e a função é finalizada.
+         * @exception Caso o nome digitado não seja encontrado um alerta é impresso e a função é finalizada.
+         * @exception Caso a senha digitada seja diferente da cadastrada um alerta é impresso e a função é finalizada.
          * @return True caso o login seja bem sucedido e false caso não.
          */
         bool login(bool* isAdm);
 
         /**
          * @brief Função de Logout do sistema.
+         * @exception Antes de se fazer o logout de fato, é pedida uma confirmação. Em caso de resposta afirmativa,
+         o logout é feito, caso negativa, um alerta é impresso e a função é finalizada, e caso a resposta seja diferente um 
+         alerta é impresso e a função é finalizado.
          * @return True caso o logout seja bem sucedido e false caso não.
          */
         bool logout();
 
         /**
          * @brief Adiciona o usuário logado na lista de espera do livro passado como parâmetro.
+         * @exception Caso a pessoa logada já esteja na lista de espera do livro solicitado, um alerta 
+         sinalizando isso é impresso e a função é finalizada.
          * @param livro endereço de memória do livro, no vetor da biblioteca.
          */
         void add_lista_espera(Livro* livro);

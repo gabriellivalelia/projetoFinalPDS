@@ -57,8 +57,9 @@ bool Usuario::adicionar_livro_no_vetor(Livro livro) {
 * @brief Remove um livro do vetor de livros alugados pelo usuário corrente.
 * @exception Caso o livro não esteja no vetor de livros alugaar, um alerta é impresso indicando isso.
 * @param livro O livro que será removido.
+* @return True caso a ação seja bem sucedida e false caso contrário.
 */
-void Usuario::excluir_livro_do_vetor(Livro livro){
+bool Usuario::excluir_livro_do_vetor(Livro livro){
 
    bool encontrado = false;
 
@@ -75,5 +76,6 @@ void Usuario::excluir_livro_do_vetor(Livro livro){
      std::cout << "Este livro não está na sua lista de locações, logo não é possível devolvê-lo." << std::endl;
    }
 
+   return encontrado;
 };
 

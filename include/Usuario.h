@@ -46,8 +46,9 @@ class Usuario : public Pessoa {
          * @brief Remove um livro do vetor de livros alugados pelo usuário corrente.
          * @exception Caso o livro não esteja no vetor de livros alugaar, um alerta é impresso indicando isso.
          * @param livro O livro que será removido.
+         * @return True caso a ação seja bem sucedida e false caso contrário.
          */
-        void excluir_livro_do_vetor(Livro livro);
+        bool excluir_livro_do_vetor(Livro livro);
 
 
 };

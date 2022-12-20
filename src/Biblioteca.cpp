@@ -1,11 +1,19 @@
 #include "Biblioteca.h"
 #include <utility>
 
+/**
+ * Cria uma nova bibliooteca.
+ * @brief Constructor.
+ */
 Biblioteca::Biblioteca()
 {}
 
-void Biblioteca::get_livros_autor(std::string autor)
-{
+/**
+ * @brief Busca e imprime os dados de todos os livros de um autor, caso existam.
+ * @exception Caso não exista nenhum livro do autor solicitado um alerta indicando isso é impresso.
+ * @param autor O nome do autor que será buscado.
+ */
+void Biblioteca::get_livros_autor(std::string autor) {
    int qtd = 0;
 
    for(auto& livro : _livros_estoque)
@@ -21,15 +29,16 @@ void Biblioteca::get_livros_autor(std::string autor)
 
    if(qtd == 0)
    {
-      //exceção
       std::cout<< "Lamentamos, mas nao temos exemplares desse autor." << std::endl;
-
    }
 }
 
-//posso alterar
-void Biblioteca::get_livros_genero(std::string genero)
-{
+/**
+ * @brief Busca e imprime os dados de todos os livros de um gênero, caso existam.
+ * @exception Caso não exista nenhum livro do gênero solicitado um alerta indicando isso é impresso.
+ * @param genero O genero que será buscado.
+ */
+void Biblioteca::get_livros_genero(std::string genero) {
    int qtd = 0;
 
    for(auto& livro : _livros_estoque)
@@ -44,15 +53,17 @@ void Biblioteca::get_livros_genero(std::string genero)
 
    if(qtd == 0)
    {
-      //exceção
       std::cout<< "Lamentamos, mas nao temos exemplares desse genero." << std::endl;
-
    }
 }
 
-//posso alterar
-bool Biblioteca::get_livros_nome(std::string nome)
-{
+/**
+ * @brief Busca e imprime os dados de um livro a partir de seu título.
+ * @param nome Título do livro que será buscado.
+ * @exception Caso não exista um livro com o título passado por parâmetro um alerta é impresso indicando isso.
+ * @return True caso o livro se encontrado e false caso não.
+ */
+bool Biblioteca::get_livros_nome(std::string nome) {
    int qtd = 0;
 
    for(auto& livro : _livros_estoque)
@@ -66,7 +77,6 @@ bool Biblioteca::get_livros_nome(std::string nome)
    }
    if(qtd == 0)
    {
-      //exceção
       std::cout<< "Lamentamos, mas nao temos exemplares desse titulo." << std::endl;
       return false;
    }
@@ -76,10 +86,12 @@ bool Biblioteca::get_livros_nome(std::string nome)
    }
 }
 
-
-//posso alterar
-Usuario* Biblioteca::get_usuario_especifico(std::string nome)
-{
+/**
+ * @brief Busca por um usuário específico no sistema pelo nome.
+ * @param nome Nome do usuário que será buscado.
+ * @return O ponteiro do usuário caso encontre e nullptr caso não.
+ */
+Usuario* Biblioteca::get_usuario_especifico(std::string nome) {
     for(auto& usuario : _usuarios)
     {
         if(usuario->get_nome() == nome)
@@ -89,13 +101,15 @@ Usuario* Biblioteca::get_usuario_especifico(std::string nome)
         }
     }
 
-    //exceção
-    //std::cout<<"Pessoa nao encontrada!"<<std::endl;
     return nullptr;
 }
 
-Bibliotecario* Biblioteca::get_bibliotecario_especifico(std::string nome)
-{
+/**
+ * @brief Busca por um bibliotecário específico no sistema pelo nome.
+ * @param nome Nome do bibliotecário que será buscado.
+ * @return O ponteiro do bibliootecário caso encontre e nullptr caso não.
+ */
+Bibliotecario* Biblioteca::get_bibliotecario_especifico(std::string nome) {
 
     for(auto& bibliotecario : _bibliotecarios)
     {
@@ -106,56 +120,67 @@ Bibliotecario* Biblioteca::get_bibliotecario_especifico(std::string nome)
         }
     }
 
-    //exceção
-    //std::cout<<"Pessoa nao encontrada!"<<std::endl;
     return nullptr;
 }
 
-
-Livro* Biblioteca::get_livro_especifico(std::string titulo)
-{
+/**
+ * @brief Busca por um livro específico no sistema pelo título.
+ * @param titulo Título do livro que será buscado.
+ * @return O ponteiro do livro caso encontre e nullptr caso não.
+ */
+Livro* Biblioteca::get_livro_especifico(std::string titulo) {
 
     for(auto& livro : _livros_estoque)
     {
         if(livro.get_titulo() == titulo)
         {
-            //std::cout << "Livro: "<< livro.get_titulo() << ", "<< livro.get_quantidade() << " disponiveis" << std::endl;
             return &livro;
         }
     }
-
-    //exceção
-    //std::cout<<"Livro nao encontrado!"<<std::endl;
+   
     return nullptr;
 }
 
-
-void Biblioteca::devolver_livro_alugado(std::string titulo)
-{
+/**
+ * @brief Remove o livro do vetor de livros alugados do usuário logado e aumenta a quantidade de exemplares disponíveis em 1 do livro devolvido.
+ * @exception Caso o livro não seja encontrado na biblioteca um alerta para isso é impresso e a função é finalizada.
+ * @param titulo O Título do livro que será devolvido.
+ */
+void Biblioteca::devolver_livro_alugado(std::string titulo) {
    Livro* livro = get_livro_especifico(titulo);
 
    if (livro == nullptr) {
-        std::cout << "Este livro não está entre suas locações." << std::endl;
-   } else {
+        std::cout << "Este livro não pertence ao nosso sitema." << std::endl;
+   }else {
         livro->update_quantidade(1); 
-        _usuarioLogado->excluir_livro_do_vetor(*livro);
+        bool devolvido = _usuarioLogado->excluir_livro_do_vetor(*livro);
         update_lista_de_espera();
 
-        std::cout<<"Livro devolvido com sucesso! Obrigada pelo cuidado!" <<std::endl;
+        if(devolvido){
+            std::cout<<"Livro devolvido com sucesso! Obrigada pelo cuidado!" << std::endl << std::endl;
+            std::cout<< "Aqui estão suas locações atualizadas:"<< std::endl;
+            ver_livros_alugados();
+            std::cout << std::endl;
+        }
 
-        std::cout<< "Aqui estão suas locações atualizadas:"<< std::endl;
-        ver_livros_alugados();
-        std::cout << std::endl;
    }
 }
 
-
+/**
+ * @brief Adiciona o livro no vetor de livros alugados do usuário logado e diminuí a quantidade de exemplares disponíveis em 1 do livro alugado.
+ * @exception Caso o livro exista no sistema mas a quantidade de exemplares disponíveis seja 0, é perguntado ao usuário se ele deseja entrar na 
+lista de espera. Em caso afirmativo, a função add_lista_de_espera é chamada, rm caso negativo a função é encerrada, em caso de resposta diferente
+um alerta é impresso e a função é finalizada.
+* @exception Caso o livro não exista no sistema um alerta é impresso e a função é finalizada.
+ * @param titulo O Título do livro que será alugado.
+ */
 void Biblioteca::adicionar_livro_alugado(std::string titulo)
 {
     Livro* livro = get_livro_especifico(titulo);
 
     if (livro != nullptr) {
-        std::cout<< livro->get_titulo() << ", escrito por " << livro->get_autor() << ". Genero " << livro->get_genero() << std::endl;
+        std::cout<< livro->get_titulo() << ", escrito por " << livro->get_autor() << ". Genero " << livro->get_genero() << std::endl <<  std::endl;
+
         if (livro->get_quantidade() == 0)
         {
             std::cout << "O Titulo escolhido se encontra em falta em nosso estoque. Deseja entrar para lista de espera? (Y/N)" << std::endl;
@@ -163,51 +188,58 @@ void Biblioteca::adicionar_livro_alugado(std::string titulo)
             std::string resposta;
             getline(std::cin, resposta);
 
-            if(resposta == "Y")
-            {
+            if(resposta == "Y"){
                 add_lista_espera(livro);
-            }
-            else if(resposta == "N"){
-                std::cout << "Certo! Pesquise outro titulo" << std::endl;
+            }else if(resposta == "N"){
+                std::cout << "Certo! Pesquise outro titulo" << std::endl <<  std::endl;
+            }else{
+               std::cout << "Comando inválido" << std::endl <<  std::endl; 
             }
         }
         else
         {   
             Livro aux = *livro;
+    
             if (_usuarioLogado->adicionar_livro_no_vetor(aux) == true) {
                 livro->update_quantidade(-1);
                 std::cout <<"Livro alugado com sucesso!"<< std::endl;
             }
+
             std::cout<< "Aqui estão suas locações atualizadas:"<< std::endl;
             ver_livros_alugados();
             std::cout << std::endl;
-
         }
 
     } else if (livro == nullptr) {
-        std::cout<< "Lamentamos, mas nao temos exemplares desse titulo." << std::endl;
-    }
-    
+        std::cout<< "Lamentamos, mas nao temos exemplares desse titulo." << std::endl <<  std::endl;
+    }   
 }
+
+/**
+ * @brief Cadastra um novo livro no sistema.
+ * @param livro O livro que será cadastrado.
+ */
 void Biblioteca::adiciona_livros_no_estoque(Livro livro)
 {
-   _livros_estoque.push_back(livro);
-   std::cout <<"Livro cadastrado com sucesso!"<< std::endl << std::endl;
-
+    _livros_estoque.push_back(livro);
+    std::cout <<"Livro cadastrado com sucesso!"<< std::endl << std::endl;
     std::cout<< "Aqui está o acervo atualizado:"<< std::endl;
     imprime_livros();
-    std::cout << std::endl;
-  
+    std::cout << std::endl;  
 }
 
-void Biblioteca::ver_livros_alugados()
-{
+/**
+ * @brief Chama a função de ver todos os livros alugados do usuário logado.
+ */
+void Biblioteca::ver_livros_alugados() {
     _usuarioLogado->visualizar_livros_alugados(); 
 }
 
-
-void Biblioteca::adiciona_usuarios_no_vetor(Usuario* usuario)
-{
+/**
+ * @brief Cadastra um novo usuário no sistema.
+ * @param usuario O endereço de memória do usuário que será cadastrado.
+ */
+void Biblioteca::adiciona_usuarios_no_vetor(Usuario* usuario) {
         _usuarios.push_back(usuario);
         std::cout << "Usuario adicionada com sucesso!" << std::endl;
 
@@ -217,8 +249,11 @@ void Biblioteca::adiciona_usuarios_no_vetor(Usuario* usuario)
 
 }
 
-void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
-{
+/**
+ * @brief Cadastra um novo bibliotecário no sistema.
+ * @param bibliotecario O endereço de memória do bibliotecário que será cadastrado.
+ */
+void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario) {
         _bibliotecarios.push_back(bibliotecario);
         std::cout << "Pessoa adicionada com sucesso!" << std::endl << std::endl;
 
@@ -227,8 +262,10 @@ void Biblioteca::adiciona_bibliotecarios_no_vetor(Bibliotecario* bibliotecario)
         std::cout << std::endl;
 }
 
-void Biblioteca::preencher_livros()
-{
+/**
+ * @brief Preenche o vetor de livros com livros pré determinados a cada inicialização do programa.
+ */
+void Biblioteca::preencher_livros() {
    Livro um = Livro("O Visconde que me amava", "Julia Queen" , "Romance", 1 );
    Livro dois = Livro("O Duque e eu", "Julia Queen", "Romance" , 4  );
    Livro tres = Livro( "Diario de um banana: Segurando Vela", "Jeff Kenny ", "InfantoJuvenil", 5 );
@@ -275,8 +312,11 @@ void Biblioteca::preencher_livros()
    _livros_estoque.push_back(vinteEUm);
 
 }
-void Biblioteca::preencher_pessoas()
-{
+
+/**
+ * @brief Preenche o vetor de usuários e bibliotecários com dados pré determinados a cada inicialização do programa.
+ */
+void Biblioteca::preencher_pessoas() {
     Bibliotecario* Ana = new Bibliotecario("Ana Sales", "5839ab");
     _bibliotecarios.push_back(Ana);
     Bibliotecario* Estevao = new Bibliotecario("Estêvão Rocha", "9546fg");
@@ -303,8 +343,12 @@ void Biblioteca::preencher_pessoas()
 
 }
 
-bool Biblioteca::bibliotecario_existe(std::string nome)
-{
+/**
+ * @brief Busca por um bibliotecário no sistema através do nome.
+ * @param nome Nome do biliotecário que será buscado.
+ * @return True caso encontre e false caso não.
+ */
+bool Biblioteca::bibliotecario_existe(std::string nome) {
     std::cout << nome << std::endl;
     for( Bibliotecario* bibliotecario : _bibliotecarios)
     {
@@ -316,8 +360,12 @@ bool Biblioteca::bibliotecario_existe(std::string nome)
     return false;
 }
 
-bool Biblioteca::usuario_existe(std::string nome)
-{
+/**
+ * @brief Busca por um usuário no sistema através do nome.
+ * @param nome Nome do usuário que será buscado.
+ * @return True caso encontre e false caso não.
+ */
+bool Biblioteca::usuario_existe(std::string nome) {
     for( Usuario* usuario : _usuarios)
     {
         if(usuario->get_nome() == nome)
@@ -328,8 +376,12 @@ bool Biblioteca::usuario_existe(std::string nome)
     return false;
 }
 
-bool Biblioteca::livro_existe(std::string titulo)
-{
+/**
+ * @brief Busca por um livro no sistema através do título.
+ * @param titulo Título do livro que será buscado.
+ * @return True caso encontre e false caso não.
+ */
+bool Biblioteca::livro_existe(std::string titulo) {
     for (Livro livro : _livros_estoque)
     {
         if (livro.get_titulo() == titulo)
@@ -340,9 +392,10 @@ bool Biblioteca::livro_existe(std::string titulo)
     return false;
 }
 
-void Biblioteca::ver_listas_espera()
-{
-
+/**
+ * @brief Imprime todos os livros e os respectivos nome das pessoas que estão em listas de epsera do mesmo do vetor _listas_de_espera.
+ */
+void Biblioteca::ver_listas_espera() {
     for(auto& par : _listas_espera)
     {
         std::cout << "Livro: " << par.first->get_titulo() << std::endl;
@@ -355,9 +408,16 @@ void Biblioteca::ver_listas_espera()
     }
 }
 
-
-bool Biblioteca::login(bool* isAdm)
-{
+/**
+ * @brief Função de Login do sistema.
+ * @param isAdm Variável do tipo bool* que recebe true caso o login seja bem sucedido e feito por um bibliotecário e false caso seja feito
+por um usuário. Essa variável é usada no controle de manipulação dos métodos na main.
+* @exception Caso o usuário insira um tipo inválido, um alerta é impresso e a função é finalizada.
+* @exception Caso o nome digitado não seja encontrado um alerta é impresso e a função é finalizada.
+* @exception Caso a senha digitada seja diferente da cadastrada um alerta é impresso e a função é finalizada.
+* @return True caso o login seja bem sucedido e false caso não.
+*/
+bool Biblioteca::login(bool* isAdm) {
   std::string _nome, _senha, _tipo;
     
     while(_nome.size() == 0) {
@@ -448,7 +508,14 @@ bool Biblioteca::login(bool* isAdm)
     }
 }
 
-bool Biblioteca::logout(){
+/**
+ * @brief Função de Logout do sistema.
+ * @exception Antes de se fazer o logout de fato, é pedida uma confirmação. Em caso de resposta afirmativa,
+ o logout é feito, caso negativa, um alerta é impresso e a função é finalizada, e caso a resposta seja diferente um 
+    alerta é impresso e a função é finalizado.
+    * @return True caso o logout seja bem sucedido e false caso não.
+    */
+bool Biblioteca::logout() {
 
    std::cout << "Deseja realmente fazer logout? (Y/N)" << std::endl;
 
@@ -468,14 +535,19 @@ bool Biblioteca::logout(){
       return false;
    }
    else{
-     // Pôr uma exceção aqui
+     std::cout << "Comando inválido!" << std::endl << std::endl;
      return false;
    }
 
 }
 
-void Biblioteca::add_lista_espera(Livro* livro)
-{
+/**
+ * @brief Adiciona o usuário logado na lista de espera do livro passado como parâmetro.
+ * @exception Caso a pessoa logada já esteja na lista de espera do livro solicitado, um alerta 
+ sinalizando isso é impresso e a função é finalizada.
+ * @param livro endereço de memória do livro, no vetor da biblioteca.
+ */
+void Biblioteca::add_lista_espera(Livro* livro) {
     bool pessoaNaLista = false;
     bool livroNaLista = false;
 
@@ -492,7 +564,7 @@ void Biblioteca::add_lista_espera(Livro* livro)
                     if(pessoa_espera->get_nome() == _usuarioLogado->get_nome())
                     {
                         pessoaNaLista = true;
-                        std::cout << "Voce ja esta na lista de espera para este livro, tenha paciencia" << std::endl;
+                        std::cout << "Voce ja esta na lista de espera para este livro, tenha paciencia" << std::endl << std::endl;
                         break;
                     }
                 }
@@ -500,7 +572,7 @@ void Biblioteca::add_lista_espera(Livro* livro)
                 if(!pessoaNaLista)
                 {
                     par.second.push_back(_usuarioLogado);
-                    std::cout << "Pronto! Assim que esse exemplar estiver disponivel elesera alocado para voce!" << std::endl;
+                    std::cout << "Pronto! Assim que esse exemplar estiver disponivel elesera alocado para voce!" << std::endl << std::endl;
                 }
             }
         }
@@ -512,12 +584,13 @@ void Biblioteca::add_lista_espera(Livro* livro)
         pessoas.push_back(_usuarioLogado);
 
         _listas_espera.push_back(make_pair(livro, pessoas));
-        std::cout << "Pronto! Assim que esse exemplar estiver disponivel ele sera alocado para voce!" << std::endl;
+        std::cout << "Pronto! Assim que esse exemplar estiver disponivel ele sera alocado para voce!" << std::endl << std::endl;
     }
 }
 
-
-
+/**
+ * @brief Caso algum livro que tenha lista de espera fique sem pessoas na lista, remove o pair do vetor listas_de_espera.
+ */
 void Biblioteca::limpar_lista_de_espera(){
 
     auto it = _listas_espera.begin();
@@ -535,8 +608,11 @@ void Biblioteca::limpar_lista_de_espera(){
     }
 }
 
-void Biblioteca::update_lista_de_espera(){
-
+/**
+ * @brief Caso algum livro que tenha lista de espera fique com quantidade de exemplares disponíveis maior que zero, aloca o livro para 
+a primeira pessoa da lista e a remove da lista de espera.
+ */
+void Biblioteca::update_lista_de_espera() {
 
     for(auto& par : _listas_espera)
     {
@@ -547,14 +623,16 @@ void Biblioteca::update_lista_de_espera(){
            par.first->update_quantidade(-1);
            Usuario* aux = par.second[0];
            aux->adicionar_livro_no_vetor(*par.first);
-           //std::cout<<"Livro " << par.first->get_titulo() << " alugado para " << aux->get_nome() << std::endl;
            par.second.erase(par.second.begin());
         }
     }
     limpar_lista_de_espera();
 }
 
-void Biblioteca::imprime_livros(){
+/**
+ * @brief Imprime todos os livros do sistema.
+ */
+void Biblioteca::imprime_livros() {
 
     for(auto& livro : _livros_estoque)
     {
@@ -563,7 +641,10 @@ void Biblioteca::imprime_livros(){
     std::cout<<std::endl;
 }
 
-void Biblioteca::imprime_pessoas(){
+/**
+ * @brief Imprime todas as pessoas do sistema ( Usuários e Bibliotecários ).
+ */
+void Biblioteca::imprime_pessoas() {
 
     for(auto& bibliotecario : _bibliotecarios)
     {
