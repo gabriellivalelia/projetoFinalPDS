@@ -41,5 +41,19 @@ TEST_CASE("Testes Biblioteca - A") {
 
     Bibliotecario* bibTeste2 = teste.get_bibliotecario_especifico("Mateus Pardini");
     CHECK_EQ(nullptr, bibTeste2);
-    
+
+    Livro testeLivroAdd = Livro("Biblia", "Apóstolos" , "Religioso", 1 );
+    teste.adiciona_livros_no_estoque(testeLivroAdd);
+    Livro* livroAdicionadoTeste = teste.get_livro_especifico("Biblia");
+    CHECK_EQ(testeLivroAdd.get_titulo(), livroAdicionadoTeste->get_titulo());
+
+    Usuario* testeUsuarioAdd = new Usuario("Julia Monteiro", "123456");
+    teste.adiciona_usuarios_no_vetor(testeUsuarioAdd);
+    Usuario* usuarioAdicionadoTeste = teste.get_usuario_especifico("Julia Monteiro");
+    CHECK_EQ(testeUsuarioAdd->get_nome(), usuarioAdicionadoTeste->get_nome());
+
+    Bibliotecario* testeBibliotecarioAdd = new Bibliotecario("Luciene Monteiro", "123456");
+    teste.adiciona_bibliotecarios_no_vetor(testeBibliotecarioAdd);
+    Bibliotecario* bibliotecarioAdicionadoTeste = teste.get_bibliotecario_especifico("Luciene Monteiro");
+    CHECK_EQ(testeBibliotecarioAdd->get_nome(), bibliotecarioAdicionadoTeste->get_nome());
 }
