@@ -186,12 +186,12 @@ class Biblioteca
          * @brief Caso algum livro que tenha lista de espera fique com quantidade de exemplares disponíveis maior que zero, aloca o livro para 
         a primeira pessoa da lista e a remove da lista de espera.
          */
-        void update_lista_de_espera();//A
+        void update_lista_de_espera();//A 
 
         /**
          * @brief Caso algum livro que tenha lista de espera fique sem pessoas na lista, remove o pair do vetor listas_de_espera.
          */
-        void limpar_lista_de_espera();//A
+        void limpar_lista_de_espera();//A//em andamento
 
         /**
          * @brief Imprime todos os livros do sistema.
@@ -208,14 +208,14 @@ class Biblioteca
          * @param nome Nome do usuário que será buscado.
          * @return O ponteiro do usuário caso encontre e nullptr caso não.
          */
-        Usuario* get_usuario_especifico(std::string nome);//A
+        Usuario* get_usuario_especifico(std::string nome);//A //ok
 
         /**
          * @brief Busca por um bibliotecário específico no sistema pelo nome.
          * @param nome Nome do bibliotecário que será buscado.
          * @return O ponteiro do bibliootecário caso encontre e nullptr caso não.
          */
-        Bibliotecario* get_bibliotecario_especifico(std::string nome);//A
+        Bibliotecario* get_bibliotecario_especifico(std::string nome);//A//ok
 
         /**
          * @brief Busca por um livro específico no sistema pelo título.

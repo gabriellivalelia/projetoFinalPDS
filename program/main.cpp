@@ -128,7 +128,7 @@ int main() {
             /**
              * Caso o comando seja "ADD PESSOA", verifica se é um bibliotecário, caso não seja, imprime um alerta..
              */ 
-            else if(comando == "ADD PESSOA") //em andamento
+            else if(comando == "ADD PESSOA")
             {
                 if(isAdm)
                 {
@@ -255,7 +255,7 @@ int main() {
                         std::cout << "A quantidade mínima deve ser maior que 0 e deve ser um número."  << std::endl;
                         getline(std::cin, str_qtd);
                     }
-                       qtd = stoi(str_qtd);
+                    qtd = stoi(str_qtd);
 
                     /**
                      * Pergunta o gênero do livro para cadastrar enquanto for enviada uma string vazia.
