@@ -41,10 +41,5 @@ TEST_CASE("Testes Biblioteca - A") {
 
     Bibliotecario* bibTeste2 = teste.get_bibliotecario_especifico("Mateus Pardini");
     CHECK_EQ(nullptr, bibTeste2);
-
-    Livro* livroTeste = teste.get_livro_especifico("Dom Casmurro");
-    CHECK_EQ("Dom Casmurro", livroTeste->get_titulo());
-
-    Livro* livroTeste2 = teste.get_livro_especifico("Mateus Pardini");
-    CHECK_EQ(nullptr, livroTeste2);
+    
 }
