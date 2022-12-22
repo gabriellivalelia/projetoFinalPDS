@@ -19,8 +19,32 @@ TEST_CASE("Testes Biblioteca - B") {
     CHECK_EQ(teste.bibliotecario_existe("Ana Sales") , true);
     CHECK_EQ(teste.bibliotecario_existe("Antonella Santos") , false);
 
-    CHECK_EQ(livro_existe("Frankenstein"), true);
+    CHECK_EQ(teste.livro_existe("Frankenstein"), true);
 
-    Livro livroTeste = teste.get_livro_especifico("Frankenstein");
-    CHECK_EQ(livroTeste.get_titulo(), "Frankenstein");
+    Livro* livroTeste = teste.get_livro_especifico("Frankenstein");
+    CHECK_EQ(livroTeste->get_titulo(), "Frankenstein");
+}
+
+TEST_CASE("Testes Biblioteca - A") {
+    Biblioteca teste = Biblioteca();
+    teste.preencher_livros();
+    teste.preencher_pessoas();
+
+    Usuario* usuarioTeste = teste.get_usuario_especifico("Mateus Pardini");
+    CHECK_EQ("Mateus Pardini", usuarioTeste->get_nome());
+
+    Usuario* usuarioTeste2 = teste.get_usuario_especifico("Mateus");
+    CHECK_EQ(nullptr, usuarioTeste2);
+
+    Bibliotecario* bibTeste = teste.get_bibliotecario_especifico("Ana Sales");
+    CHECK_EQ("Ana Sales", bibTeste->get_nome());
+
+    Bibliotecario* bibTeste2 = teste.get_bibliotecario_especifico("Mateus Pardini");
+    CHECK_EQ(nullptr, bibTeste2);
+
+    Livro* livroTeste = teste.get_livro_especifico("Dom Casmurro");
+    CHECK_EQ("Dom Casmurro", livroTeste->get_titulo());
+
+    Livro* livroTeste2 = teste.get_livro_especifico("Mateus Pardini");
+    CHECK_EQ(nullptr, livroTeste2);
 }
